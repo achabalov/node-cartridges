@@ -8,10 +8,14 @@ export default function FormApplication() {
     const dispatch = useDispatch();
     // const request = useSelector(state=> state.readyApplication.readyApplication);
     // console.log(request);
-
+    // const docx = useSelector(state => state.equipment.docxGenerator);
     // useEffect(()=> {
-    //     console.log(docx);
-    //     PostDocxGenerator(docx)
+    //     if(docx.length !== 0) {
+    //         console.log('Start async form application');
+    //         console.log(docx);
+    //         PostDocxGenerator(docx)
+    //     }
+        
     // }, [finishRequest])
     return (
         <div>

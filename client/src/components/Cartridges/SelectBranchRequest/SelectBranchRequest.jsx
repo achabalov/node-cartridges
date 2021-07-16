@@ -14,23 +14,16 @@ export default function SelectBranchRequest() {
     const finishRequest2 = filterToBranch.map(el => {
         return Object.values(el)
     })
-    console.log(finishRequest2);
     const docx = useSelector(state=> state.equipment.docxGenerator);
     useEffect(()=> {
-        if(docx !== []) {
-            console.log('Start async');
-            console.log(docx);
-            const d = JSON.stringify(...docx);
-            console.log(d);
-            PostDocxGenerator(d)
+        if(docx.length !== 0) {
+            PostDocxGenerator(docx)
         }
         
     }, [docx])
     return (
         <>
         {finishRequest2.length !== 0 ? finishRequest2.map((el, index)=> {
-            console.log(el);
-
             return (
             <div key={index} className='finish__request'>
             <div className='finish__request__branch'>
