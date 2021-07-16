@@ -1,0 +1,10 @@
+.dayPicker {
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    height: 400px;
+    input {
+        width: 20px;
+    }
+}
