@@ -143,9 +143,6 @@ export default function Devices({ device }) {
       });
   }, [dateImportOnSU, dateExportToSU, dateImportOfRepair, dateExportToRepair]);
 
-  const buttonHandler = () => {
-    return;
-  };
   return (
     <li>
       <div className="device">

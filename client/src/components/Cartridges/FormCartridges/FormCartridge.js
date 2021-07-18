@@ -10,6 +10,7 @@ import {
   ADD_BRANCH_CARTRIDGES,
   DEVICE_FILTER_BRANCH,
 } from "../../../redux/types";
+import { GetDocxGenerator, PostDocxGenerator } from "../../../async/docxGenerator";
 
 export function FormCartridge() {
   const dispatch = useDispatch();
@@ -22,6 +23,20 @@ export function FormCartridge() {
   function submitHandler(event) {
     event.preventDefault();
   }
+  const docx = useSelector(state=> state.equipment.docxGenerator)
+    if(docx.length !== 0) {
+        (async function() {
+                try {
+                    if(docx.length !== 0 ) {
+                        await PostDocxGenerator(docx);
+                        await GetDocxGenerator(branch);
+                    }
+                } catch(err) {
+                    console.log(err);
+                }
+        })()
+        dispatch({type: "NULLDOCX"})
+    }
 
   return (
     <>

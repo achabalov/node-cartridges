@@ -1,13 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { REMOVE_CARTRIDGE } from "../../../redux/types";
+
 import "./Cartridge.scss";
 
 export default function Cartridge() {
   
   const cartridge = useSelector((state) => state.equipment.cartridges);
   const dispatch = useDispatch();
-  
+
   return (
     <div className='cartridge__container'>
       {cartridge.map((request, index) => {

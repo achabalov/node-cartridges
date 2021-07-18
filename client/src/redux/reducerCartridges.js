@@ -8,7 +8,7 @@ import {
   DEVICE_FILTER_BRANCH,
 } from "./types";
 
-import {branchs, cartridges_types} from './defaultValues';
+import {cartridges_types} from './defaultValues';
 
 const initialState = {
   cartridges: [],
@@ -45,7 +45,7 @@ export const reducerEquipment = (state = initialState, action) => {
         }
       case "DOCX": 
       const obj = {};
-      cartridges_types.map((el, index) => {
+      cartridges_types.forEach((el, index) => {
         action.payload.forEach(elem=> {
           if(el === elem.model) {
             obj[elem.model] =elem.count
@@ -57,6 +57,11 @@ export const reducerEquipment = (state = initialState, action) => {
           ...state,
           docxGenerator: [obj]
         }
+        case "NULLDOCX":
+          return {
+            ...state, 
+            docxGenerator: []
+          }
     // case FINISH_REQUEST: 
     //   const branch = branchs.filter(el => {
     //       return el === action.payload[0].branch

@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import Se2 from './Se2';
-import { PostDocxGenerator } from '../../../async/docxGenerator';
 import './SelectBranchRequest.scss';
 
 export default function SelectBranchRequest() {
@@ -14,13 +13,7 @@ export default function SelectBranchRequest() {
     const finishRequest2 = filterToBranch.map(el => {
         return Object.values(el)
     })
-    const docx = useSelector(state=> state.equipment.docxGenerator);
-    useEffect(()=> {
-        if(docx.length !== 0) {
-            PostDocxGenerator(docx)
-        }
-        
-    }, [docx])
+
     return (
         <>
         {finishRequest2.length !== 0 ? finishRequest2.map((el, index)=> {
