@@ -15,6 +15,8 @@ import { cartridges_types } from "./defaultValues";
 const initialState = {
   cartridges: [],
   modal: false,
+  typeModal: '',
+  id: '',
   branch: "",
   addLoading: false,
   finishRequestCartridges: [],
@@ -37,6 +39,19 @@ export const reducerEquipment = (state = initialState, action) => {
         ...state,
         cartridges: [...filterBranch],
       };
+    case 'CHANGE_CARTRIDGE_COUNT':
+      const newCount = state.cartridges.map(elem=> {
+        if(elem.id === state.id) {
+          elem.count = action.payload.count
+          return elem;
+        } else {
+          return elem
+        }
+      })
+      return {
+        ...state,
+        cartridges: [...newCount]
+      }
     case FINISH_REQUEST:
       const oneRequest = action.payload[0].branch;
       return {
@@ -50,9 +65,9 @@ export const reducerEquipment = (state = initialState, action) => {
       };
     case DOCX:
       const obj = {};
-      cartridges_types.forEach((el, index) => {
+      cartridges_types.forEach((el) => {
         action.payload.forEach((elem) => {
-          if (el === elem.model) {
+          if (el.model === elem.model) {
             obj[elem.model] = elem.count;
           }
         });
@@ -63,6 +78,7 @@ export const reducerEquipment = (state = initialState, action) => {
       };
 
     case DOCX_RESET:
+      cartridges_types.forEach(type=> type.active = true)
       return {
         ...state,
         docxGenerator: [],
@@ -77,15 +93,20 @@ export const reducerEquipment = (state = initialState, action) => {
       };
 
     case SHOW_MODAL_ADD_CARTRIDGE:
+      console.log(action.payload);
       return {
         ...state,
-        modal: action.payload,
+        modal: action.payload.modal,
+        typeModal: action.payload.typeModal,
+        id: action.payload.id
       };
 
     case ADD_BRANCH_CARTRIDGES:
+      cartridges_types.forEach(type=> type.active = true)
       return {
         ...state,
         branch: action.payload,
+        typeModal: 'addCartridge'
       };
 
     case REMOVE_CARTRIDGE:

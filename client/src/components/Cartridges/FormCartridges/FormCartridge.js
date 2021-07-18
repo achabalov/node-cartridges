@@ -16,7 +16,7 @@ export function FormCartridge() {
   const dispatch = useDispatch();
   const branch = useSelector(state => state.equipment.branch);
   useEffect(() => {
-    branch && dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: true });
+    branch && dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: 'addCartridge'} });
   }, [branch]);
 
   function submitHandler(event) {
@@ -49,7 +49,7 @@ export function FormCartridge() {
           {branch ? 
           <button 
           className='btn btn-success' 
-          onClick={()=> dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: true })}
+          onClick={()=> dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: "addCartridge"} })}
           >
             Добавить
             </button>: ''}
