@@ -9,9 +9,9 @@ export default function SelectModel() {
 
     return (
         <select className='form-select' onChange={event => dispatch({type: 'ADD_MODEL', payload: event.target.value})} defaultValue={model}>
-            <option value={model}>Выберите количество</option>
-            {cartridges_types.map((model, index)=> {
-                return <option key={index} value={model}>{model}</option>
+            <option value={model}>Выберите модель</option>
+            {cartridges_types.map((objCartridge, index)=> {
+                return <option disabled={!objCartridge.active} key={index} value={objCartridge.model}>{objCartridge.model}</option>
             })}
         </select>
     )

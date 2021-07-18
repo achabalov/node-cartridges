@@ -2,11 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 export default function SelectCartridgeCount() {
-    // const count = useSelector(state=> state.cartridge.count);
     const dispatch = useDispatch();
     return (
-        <select className='form-select' onChange={event => dispatch({type: 'ADD_COUNT', payload: event.target.value})} defaultValue={''}>
-            <option value=''>Выберите значение</option> :  
+        <select className='form-select' onChange={event => dispatch({type: 'ADD_COUNT', payload: event.target.value})} defaultValue={1}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>

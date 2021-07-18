@@ -11,7 +11,7 @@ const model = useSelector(state=> state.cartridge.model)
 const count = useSelector(state=> state.cartridge.count)
 const branch = useSelector(state=> state.equipment.branch)
 const dispatch = useDispatch();
-
+    console.log(model, count);
     return (
         <div className={modal ? 'modal__select active' : 'modal__select'} 
         onClick={()=> dispatch({type: SHOW_MODAL_ADD_CARTRIDGE, payload: false})}>
@@ -21,7 +21,7 @@ const dispatch = useDispatch();
                 <SelectModel />
                 <label htmlFor="">Укажите количество</label>
                 <SelectCartridgeCount />
-                {model && count ? 
+                {model ? 
                 <button className='btn btn-success' 
                 onClick={()=> {
                     const id = Date.now()

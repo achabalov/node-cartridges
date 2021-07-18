@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-// import { ADD_BRANCH, FILTER_BRANCH } from '../../../redux/types';
 import { branchs } from '../../../redux/defaultValues';
 import './SelectBranch.scss';
 

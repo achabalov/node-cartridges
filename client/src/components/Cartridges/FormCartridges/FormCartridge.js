@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import SelectBranch from "../formComponent/SelectBranch";
 import ModalCartridgeForm from "../ModalAddForm/ModalCartridgeForm";
 import Cartridge from "../CartridgeList/Cartridge";
-import FormAplication from "../FormApplication/FormApplication";
 import "./FormCartridge.scss";
 import {
   SHOW_MODAL_ADD_CARTRIDGE,
   ADD_BRANCH_CARTRIDGES,
   DEVICE_FILTER_BRANCH,
+  DOCX_RESET,
 } from "../../../redux/types";
 import { GetDocxGenerator, PostDocxGenerator } from "../../../async/docxGenerator";
 
@@ -19,7 +19,6 @@ export function FormCartridge() {
     branch && dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: true });
   }, [branch]);
 
-  const formFilter = useSelector((state) => state.equipment.cartridges); 
   function submitHandler(event) {
     event.preventDefault();
   }
@@ -35,7 +34,7 @@ export function FormCartridge() {
                     console.log(err);
                 }
         })()
-        dispatch({type: "NULLDOCX"})
+        dispatch({type: DOCX_RESET})
     }
 
   return (
@@ -58,8 +57,6 @@ export function FormCartridge() {
         </div>
       </form>
       <Cartridge />
-      <hr />
-      {formFilter.length !== 0 ? <FormAplication /> : ""}
     </>
   );
 }

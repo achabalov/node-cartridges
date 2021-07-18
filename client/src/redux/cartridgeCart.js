@@ -1,6 +1,6 @@
 const initialState = {
     model: '',
-    count: ''
+    count: 1
 }
 
 const cartridgeCart = (state = initialState, action) => {

@@ -1,15 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { REMOVE_CARTRIDGE } from "../../../redux/types";
+import { DOCX, FINISH_REQUEST, REMOVE_ALL_CARTRIDGE, REMOVE_CARTRIDGE } from "../../../redux/types";
 
-import "./Cartridge.scss";
+import "./Cartridge.scss"; 
 
 export default function Cartridge() {
   
   const cartridge = useSelector((state) => state.equipment.cartridges);
   const dispatch = useDispatch();
-
   return (
+    <>
     <div className='cartridge__container'>
       {cartridge.map((request, index) => {
         return (
@@ -39,5 +39,18 @@ export default function Cartridge() {
         );
       })}
     </div>
+    {cartridge.length !== 0 ? 
+    <div>
+      <hr />
+    <span>Проверьте правильность</span>
+    <br />
+    <button className='btn btn-success' onClick={()=> {
+        dispatch({type: FINISH_REQUEST, payload: cartridge })
+        dispatch({type: REMOVE_ALL_CARTRIDGE})
+        dispatch({type: DOCX, payload: cartridge})
+    }}>Сформировать заявку</button>
+</div>
+    : null}
+    </>
   );
 }

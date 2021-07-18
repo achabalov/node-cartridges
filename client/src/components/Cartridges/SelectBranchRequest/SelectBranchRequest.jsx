@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Se2 from './Se2';
-import './SelectBranchRequest.scss';
+import './SelectBranchRequest.scss'; 
 
 export default function SelectBranchRequest() {
     const branch = useSelector(state=> state.equipment.branch)

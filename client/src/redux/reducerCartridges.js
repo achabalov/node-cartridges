@@ -6,9 +6,11 @@ import {
   REMOVE_ALL_CARTRIDGE,
   FINISH_REQUEST,
   DEVICE_FILTER_BRANCH,
+  DOCX,
+  DOCX_RESET,
 } from "./types";
 
-import {cartridges_types} from './defaultValues';
+import { cartridges_types } from "./defaultValues";
 
 const initialState = {
   cartridges: [],
@@ -16,8 +18,8 @@ const initialState = {
   branch: "",
   addLoading: false,
   finishRequestCartridges: [],
-  docxGenerator: []
-}; 
+  docxGenerator: [],
+};
 
 export const reducerEquipment = (state = initialState, action) => {
   switch (action.type) {
@@ -28,79 +30,64 @@ export const reducerEquipment = (state = initialState, action) => {
         addLoading: false,
       };
     case REMOVE_ALL_CARTRIDGE:
-      const filterBranch = state.cartridges.filter(el=> {
+      const filterBranch = state.cartridges.filter((el) => {
         return el.branch !== state.branch;
-      })
+      });
       return {
         ...state,
-        cartridges: [...filterBranch]
-      }
-      case FINISH_REQUEST:
-        const oneRequest = action.payload[0].branch
-        return {
-          ...state,
-          finishRequestCartridges: [...state.finishRequestCartridges, {
-            [oneRequest]: action.payload
-          }]
-        }
-      case "DOCX": 
+        cartridges: [...filterBranch],
+      };
+    case FINISH_REQUEST:
+      const oneRequest = action.payload[0].branch;
+      return {
+        ...state,
+        finishRequestCartridges: [
+          ...state.finishRequestCartridges,
+          {
+            [oneRequest]: action.payload,
+          },
+        ],
+      };
+    case DOCX:
       const obj = {};
       cartridges_types.forEach((el, index) => {
-        action.payload.forEach(elem=> {
-          if(el === elem.model) {
-            obj[elem.model] =elem.count
+        action.payload.forEach((elem) => {
+          if (el === elem.model) {
+            obj[elem.model] = elem.count;
           }
-        })
-      })
-      // console.log(obj);
-        return {
-          ...state,
-          docxGenerator: [obj]
-        }
-        case "NULLDOCX":
-          return {
-            ...state, 
-            docxGenerator: []
-          }
-    // case FINISH_REQUEST: 
-    //   const branch = branchs.filter(el => {
-    //       return el === action.payload[0].branch
-    //   })
-    //   const br = branch[0]
-    //   console.log(branch, ' --- ', branch[0]);
+        });
+      });
+      return {
+        ...state,
+        docxGenerator: [obj],
+      };
 
-    //   if(state[br] === undefined) {
-    //     return {
-    //     ...state,
-    //     finishRequestCartridges: [...state.finishRequestCartridges, ...action.payload]
-    //     }
-    //   }
-    //   return {
-    //       ...state,
-    //       [br]: [...state[br], ...action.payload]
-    //   }
-      case DEVICE_FILTER_BRANCH:
+    case DOCX_RESET:
+      return {
+        ...state,
+        docxGenerator: [],
+      };
+    case DEVICE_FILTER_BRANCH:
       const branches = state.cartridges.filter((el) => {
         return el.branch === action.payload;
       });
       return {
         ...state,
         cartridges: [...branches],
-      }
-    // return {
-    //   ...state, 
-    //   finishRequestCartridges: [...state.finishRequestCartridges, ...action.payload]
-    // }
+      };
+
     case SHOW_MODAL_ADD_CARTRIDGE:
       return {
         ...state,
         modal: action.payload,
       };
+
     case ADD_BRANCH_CARTRIDGES:
       return {
         ...state,
         branch: action.payload,
       };
+
     case REMOVE_CARTRIDGE:
       const temp2 = state.cartridges.filter((el) => {
         console.log(el.id, action.payload);
