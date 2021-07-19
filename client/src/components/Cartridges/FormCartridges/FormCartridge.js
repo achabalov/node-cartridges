@@ -36,7 +36,7 @@ export function FormCartridge() {
         })()
         dispatch({type: DOCX_RESET})
     }
-
+ 
   return (
     <>
       <h2>Картриджи в заправку</h2>

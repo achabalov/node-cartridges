@@ -15,8 +15,8 @@ export default function ModalCartridgeForm({type}) {
   const model = useSelector((state) => state.cartridge.model);
   const count = useSelector((state) => state.cartridge.count);
   const branch = useSelector((state) => state.equipment.branch);
+  const cartridges = useSelector((state) => state.equipment.cartridges);
   const dispatch = useDispatch();
-  console.log(count);
 
   {
     return typeModal === "addCartridge" ? (
@@ -36,7 +36,14 @@ export default function ModalCartridgeForm({type}) {
         >
           <label htmlFor="">Выберите модель</label>
           <SelectModel />
-          <label htmlFor="">Укажите количество</label>
+          {
+
+            cartridges.length !== 0 ? (
+              <button className='btn btn-success'>Подтвердить заявку</button>
+            ) : null
+
+          }
+          {/* <label htmlFor="">Укажите количество</label> */}
           {/* <SelectCartridgeCount /> */}
           {model ? (
             <button

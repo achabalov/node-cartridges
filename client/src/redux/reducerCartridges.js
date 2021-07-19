@@ -11,6 +11,7 @@ import {
 } from "./types";
 
 import { cartridges_types } from "./defaultValues";
+import { useEffect } from "react";
 
 const initialState = {
   cartridges: [],
@@ -22,6 +23,7 @@ const initialState = {
   finishRequestCartridges: [],
   docxGenerator: [],
 };
+
 
 export const reducerEquipment = (state = initialState, action) => {
   switch (action.type) {
@@ -40,6 +42,12 @@ export const reducerEquipment = (state = initialState, action) => {
         cartridges: [...filterBranch],
       };
       case 'ADD_MODEL_COUNT':
+        cartridges_types.forEach(el=> {
+          console.log(el.model, action.payload.model, el.count, action.payload.count);
+          if(el.model === action.payload.model) {
+            el.count = action.payload.count;
+          } 
+        })
         return {
             ...state,
             cartridges: [...state.cartridges, action.payload]
@@ -107,7 +115,7 @@ export const reducerEquipment = (state = initialState, action) => {
       };
 
     case ADD_BRANCH_CARTRIDGES:
-      cartridges_types.forEach(type=> type.active = true)
+      cartridges_types.forEach(cartridge => cartridge.count = 0)
       return {
         ...state,
         branch: action.payload,

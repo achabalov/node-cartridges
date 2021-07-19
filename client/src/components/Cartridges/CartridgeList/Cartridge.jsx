@@ -1,39 +1,56 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DOCX, FINISH_REQUEST, REMOVE_ALL_CARTRIDGE, REMOVE_CARTRIDGE, SHOW_MODAL_ADD_CARTRIDGE } from "../../../redux/types";
-import SelectBranchRequest from '../SelectBranchRequest/SelectBranchRequest';
+import {
+  DOCX,
+  FINISH_REQUEST,
+  REMOVE_ALL_CARTRIDGE,
+  REMOVE_CARTRIDGE,
+  SHOW_MODAL_ADD_CARTRIDGE,
+} from "../../../redux/types";
+import SelectBranchRequest from "../SelectBranchRequest/SelectBranchRequest";
 
-import "./Cartridge.scss"; 
+import "./Cartridge.scss";
 
 export default function Cartridge() {
-  const modal = useSelector(state=> state.equipment.modal);
+  const modal = useSelector((state) => state.equipment.modal);
   const cartridge = useSelector((state) => state.equipment.cartridges);
   const dispatch = useDispatch();
+
+  const [totalCount, setTotalCount] = useState(0);
+  cartridge.forEach(el=> {
+    // setTotalCount(prev => +prev+el.count )
+    console.log(totalCount);
+  })
   return (
     <>
-    <div className={modal ? 'cartridge__container active': 'cartridge__container'}>
-    <SelectBranchRequest />  
-    </div>
-    {cartridge.length !== 0 ? 
-    
-    <div>
-      <hr />
-    <span>Проверьте правильность</span>
-    <br />
-    <button className='btn btn-success' onClick={()=> {
-        dispatch({type: FINISH_REQUEST, payload: cartridge })
-        dispatch({type: REMOVE_ALL_CARTRIDGE})
-        dispatch({type: DOCX, payload: cartridge})
-    }}>Сформировать заявку и скачать реестр</button>
-</div>
-    : null}
+    {cartridge.length !== 0 ? (
+      <>
+      {/* <div>Итого картриджей в заявке {totalCount}</div> */}
+      </> ) : null
+    }
+
+      {cartridge.length !== 0 ? (
+        <div>
+          <hr />
+          <span>Проверьте правильность</span>
+          <br />
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              dispatch({ type: FINISH_REQUEST, payload: cartridge });
+              dispatch({ type: REMOVE_ALL_CARTRIDGE });
+              dispatch({ type: DOCX, payload: cartridge });
+            }}
+          >
+            Сформировать заявку и скачать реестр
+          </button>
+        </div>
+      ) : null}
     </>
   );
 }
 
-
-
-// {cartridge.map((request, index) => { 
+// {cartridge.map((request, index) => {
 //   return (
 //     <div key={index} className="cartridge">
 //       <div className="cartridge__branch">Филиал {request.branch}</div>
