@@ -39,6 +39,11 @@ export const reducerEquipment = (state = initialState, action) => {
         ...state,
         cartridges: [...filterBranch],
       };
+      case 'ADD_MODEL_COUNT':
+        return {
+            ...state,
+            cartridges: [...state.cartridges, action.payload]
+        }
     case 'CHANGE_CARTRIDGE_COUNT':
       const newCount = state.cartridges.map(elem=> {
         if(elem.id === state.id) {

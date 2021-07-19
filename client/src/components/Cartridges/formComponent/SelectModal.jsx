@@ -5,14 +5,15 @@ import { cartridges_types } from '../../../redux/defaultValues';
 export default function SelectModel() {
 
     const model = useSelector(state=> state.cartridge.model);
+    const branch = useSelector(state=> state.equipment.branch);
     const dispatch = useDispatch();
 
     return (
 
             <div className='modal__add'>
-                {cartridges_types.map(el=> { 
+                {cartridges_types.map((el, index)=> { 
                     return (
-                        <div className='modal__add__column'>
+                        <div key={index} className='modal__add__column'>
                             <div className='modal__add__column__model'>
                                 <div>Модель</div>
                                 <div>{el.model}</div>
@@ -21,7 +22,12 @@ export default function SelectModel() {
                                 <div>Количество</div>
                                 <div>{el.count || 0}</div>
                             </div>
-                            <select className='form-select' onChange={event => dispatch({type: 'ADD_MODEL_COUNT', payload: {model: el.model, count: event.target.value}})} defaultValue={'0'}>
+                            <select 
+                            className='form-select' 
+                            onChange={event => 
+                            dispatch({type: 'ADD_MODEL_COUNT', 
+                            payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})} 
+                            defaultValue={'0'}>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>

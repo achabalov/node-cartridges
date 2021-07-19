@@ -15,8 +15,8 @@ const cartridgeCart = (state = initialState, action) => {
                 ...state,
                 model: action.payload
             }
-        case 'ADD_MODEL_COUNT':
-            {
+        case 'ADD_MODEL_CsOUNT':
+            return {
                 ...state
             }
         case 'ADD_COUNT':

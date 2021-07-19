@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DOCX, FINISH_REQUEST, REMOVE_ALL_CARTRIDGE, REMOVE_CARTRIDGE, SHOW_MODAL_ADD_CARTRIDGE } from "../../../redux/types";
+import SelectBranchRequest from '../SelectBranchRequest/SelectBranchRequest';
 
 import "./Cartridge.scss"; 
 
@@ -11,36 +12,10 @@ export default function Cartridge() {
   return (
     <>
     <div className={modal ? 'cartridge__container active': 'cartridge__container'}>
-      {cartridge.map((request, index) => { 
-        return (
-          <div key={index} className="cartridge">
-            <div className="cartridge__branch">Филиал {request.branch}</div>
-            <div className="cartridge__model">картридж {request.model}</div>
-            <div className="cartridge__count">Колличество {request.count}</div>
-            <div className="cartridge__button">
-              <button
-                className="btn btn-success"
-                onClick={() => {
-                  dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: 'addCartridgeCount', id: request.id} })
-                }
-                }
-              >
-                Добавить
-              </button>
-              <button
-                className="btn btn-danger"
-                onClick={() =>
-                  dispatch({ type: REMOVE_CARTRIDGE, payload: request.id })
-                }
-              >
-                Удалить
-              </button>
-            </div>
-          </div>
-        );
-      })}
+    <SelectBranchRequest />  
     </div>
     {cartridge.length !== 0 ? 
+    
     <div>
       <hr />
     <span>Проверьте правильность</span>
@@ -55,3 +30,34 @@ export default function Cartridge() {
     </>
   );
 }
+
+
+
+// {cartridge.map((request, index) => { 
+//   return (
+//     <div key={index} className="cartridge">
+//       <div className="cartridge__branch">Филиал {request.branch}</div>
+//       <div className="cartridge__model">картридж {request.model}</div>
+//       <div className="cartridge__count">Колличество {request.count}</div>
+//       <div className="cartridge__button">
+//         <button
+//           className="btn btn-success"
+//           onClick={() => {
+//             dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: 'addCartridgeCount', id: request.id} })
+//           }
+//           }
+//         >
+//           Добавить
+//         </button>
+//         <button
+//           className="btn btn-danger"
+//           onClick={() =>
+//             dispatch({ type: REMOVE_CARTRIDGE, payload: request.id })
+//           }
+//         >
+//           Удалить
+//         </button>
+//       </div>
+//     </div>
+//   );
+// })}
