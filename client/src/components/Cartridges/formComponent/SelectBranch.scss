@@ -2,3 +2,42 @@
     width: 200px;
     height: 40px;
 }
+
+.modal__add {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: 400px;
+    margin: 0 50px;
+
+    &__column {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        margin: 5px 20px;
+        width: 450px;
+
+        &__model {
+            display: flex;
+            justify-content: flex-start;
+            flex-flow: column nowrap;
+            width: 140px;
+        }
+        &__count {
+            width: 140px;
+        }
+
+        .form-select {
+            display: flex;
+            height: 40px;
+            width: 60px;
+            margin-left: 80px;
+            text-align: center;
+            justify-content: center;
+            > * {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}

@@ -2,28 +2,32 @@ import { cartridges_types } from "./defaultValues"
 
 const initialState = {
     model: '',
-    count: 1
+    count: 0
 }
 
 const cartridgeCart = (state = initialState, action) => {
     switch(action.type) {
         case 'ADD_MODEL':
             cartridges_types.forEach(elem => {
-                return elem.model === action.payload ? elem.active = !elem.active : '' 
+                return elem.model === action.payload ? elem.active = ! elem.active : '' 
             })
             return {
                 ...state,
                 model: action.payload
+            }
+        case 'ADD_MODEL_COUNT':
+            {
+                ...state
             }
         case 'ADD_COUNT':
             return {
                 ...state,
                 count: action.payload
             }
-        case 'RESET':
+        case 'RESET': 
             return {
                 model: '',
-                count: action.payload.count
+                count: action.payload
             }
 
         default: return state;

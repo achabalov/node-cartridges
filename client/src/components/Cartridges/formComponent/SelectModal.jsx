@@ -8,17 +8,56 @@ export default function SelectModel() {
     const dispatch = useDispatch();
 
     return (
-        <select className='form-select' onChange={event => dispatch({type: 'ADD_MODEL', payload: event.target.value})} defaultValue={model}>
-            <option value={model}>Выберите модель</option>
-            {cartridges_types.map((objCartridge, index)=> {
-                return <option 
-                disabled={!objCartridge.active} 
-                key={index} 
-                value={objCartridge.model}
-                >
-                    {objCartridge.model}
-                </option>
-            })}
-        </select>
+
+            <div className='modal__add'>
+                {cartridges_types.map(el=> { 
+                    return (
+                        <div className='modal__add__column'>
+                            <div className='modal__add__column__model'>
+                                <div>Модель</div>
+                                <div>{el.model}</div>
+                            </div>
+                            <div className='modal__add__column__count'>
+                                <div>Количество</div>
+                                <div>{el.count || 0}</div>
+                            </div>
+                            <select className='form-select' onChange={event => dispatch({type: 'ADD_MODEL_COUNT', payload: {model: el.model, count: event.target.value}})} defaultValue={'0'}>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                            </select>
+                    </div>
+                        )
+                })}
+            </div>
     )
 }
+
+
+
+
+        // <select className='form-select' onChange={event => dispatch({type: 'ADD_MODEL', payload: event.target.value})} defaultValue={model}>
+        //     <option value={model}>Выберите модель</option>
+        //     {cartridges_types.map((objCartridge, index)=> {
+        //         return <option 
+        //         disabled={!objCartridge.active} 
+        //         key={index} 
+        //         value={objCartridge.model}
+        //         >
+        //             {objCartridge.model}
+        //         </option>
+        //     })}
+        // </select>
