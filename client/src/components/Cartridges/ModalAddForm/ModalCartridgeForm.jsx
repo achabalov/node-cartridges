@@ -19,7 +19,7 @@ export default function ModalCartridgeForm({ note, setNote}) {
   const dispatch = useDispatch();
 
 
-  {
+  
     return typeModal === "addCartridge" ? (
       <div
         className={modal ? "modal__select active" : "modal__select"}
@@ -117,6 +117,5 @@ export default function ModalCartridgeForm({ note, setNote}) {
       </div>
     ) : null
 }
-    
-  }
+
 

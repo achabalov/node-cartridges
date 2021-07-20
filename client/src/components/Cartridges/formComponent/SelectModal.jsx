@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartridges_types } from '../../../redux/defaultValues';
 
@@ -13,7 +13,8 @@ export default function SelectModel({note, setNote}) {
             <div className='modal__add'>
                 {cartridges_types.map((el, index)=> { 
                     return (
-                        <div key={index} className='modal__add__column'>
+                        <div key={index}>
+                        <div className='modal__add__column'>
                             <div className='modal__add__column__model'>
                                 <div>Модель</div>
                                 <div>{el.model}</div>
@@ -45,11 +46,15 @@ export default function SelectModel({note, setNote}) {
                                 <option value="14">14</option>
                                 <option value="15">15</option>
                             </select>
+                            
+                    </div>
+                    <hr style={{width: '400px', margin: 0}}/>
                     </div>
                         )
                 })}
                             <div> 
-                                <input type="text" value={note} onChange={e=> setNote(e.target.value)} />
+                                <label>Примечание</label>
+                                <input className='modal__add__input' type="text" value={note} onChange={e=> setNote(e.target.value)} />
                             </div>
             </div>
     )

@@ -44,7 +44,7 @@ export default function Cartridge({note}) {
       {cartridge.length !== 0 ? (
         <div>
           <hr />
-          <span>Проверьте правильность</span>
+          <h3>Проверьте данные которые внесли, если всё верно сформируйте</h3>
           <br />
           <button
             className="btn btn-success"

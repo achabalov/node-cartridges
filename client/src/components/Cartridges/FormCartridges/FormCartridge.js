@@ -49,6 +49,7 @@ export function FormCartridge() {
             add={ADD_BRANCH_CARTRIDGES}
             filter={DEVICE_FILTER_BRANCH}
           />
+          <br />
           {branch ? 
           <button 
           className='btn btn-success' 

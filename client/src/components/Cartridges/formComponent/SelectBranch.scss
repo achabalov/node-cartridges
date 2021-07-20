@@ -40,4 +40,16 @@
             }
         }
     }
+
+    &__input {
+        background-color: white;
+        border-radius: 5px;
+        margin: 5px 0 5px 10px;
+        width: 100%;
+        border: 1px solid gray;
+
+        &:focus, &:hover, &:active {
+            border: 1px solid gray;
+        }
+    }
 }
