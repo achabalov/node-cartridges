@@ -11,7 +11,6 @@ import {
 } from "./types";
 
 import { cartridges_types } from "./defaultValues";
-import { useEffect } from "react";
 
 const initialState = {
   cartridges: [],
@@ -43,7 +42,6 @@ export const reducerEquipment = (state = initialState, action) => {
       };
       case 'ADD_MODEL_COUNT':
         cartridges_types.forEach(el=> {
-          console.log(el.model, action.payload.model, el.count, action.payload.count);
           if(el.model === action.payload.model) {
             el.count = action.payload.count;
           } 
@@ -106,7 +104,6 @@ export const reducerEquipment = (state = initialState, action) => {
       };
 
     case SHOW_MODAL_ADD_CARTRIDGE:
-      console.log(action.payload);
       return {
         ...state,
         modal: action.payload.modal,
@@ -124,7 +121,6 @@ export const reducerEquipment = (state = initialState, action) => {
 
     case REMOVE_CARTRIDGE:
       const temp2 = state.cartridges.filter((el) => {
-        console.log(el.id, action.payload);
         return el.id !== action.payload;
       });
       return {

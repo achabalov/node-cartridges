@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SelectModel from "../formComponent/SelectModal";
 import SelectCartridgeCount from "../formComponent/SelectCartridgeCount";
 import "./ModalCartridgeForm.scss";
@@ -9,7 +9,7 @@ import {
   SHOW_MODAL_ADD_CARTRIDGE,
 } from "../../../redux/types";
 
-export default function ModalCartridgeForm({type}) {
+export default function ModalCartridgeForm({ note, setNote}) {
   const modal = useSelector((state) => state.equipment.modal);
   const typeModal = useSelector((state) => state.equipment.typeModal);
   const model = useSelector((state) => state.cartridge.model);
@@ -17,6 +17,7 @@ export default function ModalCartridgeForm({type}) {
   const branch = useSelector((state) => state.equipment.branch);
   const cartridges = useSelector((state) => state.equipment.cartridges);
   const dispatch = useDispatch();
+
 
   {
     return typeModal === "addCartridge" ? (
@@ -35,7 +36,7 @@ export default function ModalCartridgeForm({type}) {
           onClick={(e) => e.stopPropagation()}
         >
           <label htmlFor="">Выберите модель</label>
-          <SelectModel />
+          <SelectModel note={note} setNote={setNote}/>
           {
 
             cartridges.length !== 0 ? (

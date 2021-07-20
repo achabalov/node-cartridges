@@ -1,34 +1,66 @@
-.cartridge__container {
+// .cartridge__container {
+//     display: flex;
+//     flex-flow: row wrap;
+//     justify-content: flex-start;
+// }
+// .cartridge {
+//     font-size: 1.1rem;
+//     display: flex;
+//     flex-flow: column nowrap;
+//     background: #eee;
+//     align-items: center;
+//     border: 1px solid gray;
+//     border-radius: 5px; 
+//     margin: 20px;
+//     flex: 0 1 250px;
+//     & > * {
+//         display: flex;
+//         flex-flow: row wrap;
+//         justify-content: space-around;
+//         align-items: center;
+//         width: 100%;
+//         border-bottom: 1px solid gray;
+//         padding: 5px;
+//     }
+//     &__button {
+//         display: flex;
+//         flex-flow: row wrap;
+//         justify-content:space-evenly;
+//         width: 100%;
+//         border-bottom: none;
+//         padding: 0px;
+//     }
+// }
+
+.preview__apllication {
+    width: 80%;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-.cartridge {
-    font-size: 1.1rem;
-    display: flex;
-    flex-flow: column nowrap;
-    background: #eee;
-    align-items: center;
-    border: 1px solid gray;
-    border-radius: 5px; 
-    margin: 20px;
-    flex: 0 1 250px;
-    & > * {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-around;
-        align-items: center;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    margin: 30px auto;
+    padding: 40px ;
+    background-color: rgb(240, 240, 240);
+    border-radius: 0 30px 0 30px;
+    font-size: 1.2rem;
+    box-shadow: 1px 1px 3px 1px;
+
+    hr {
         width: 100%;
-        border-bottom: 1px solid gray;
-        padding: 5px;
     }
-    &__button {
+
+    &__cartridge {
         display: flex;
-        flex-flow: row wrap;
-        justify-content:space-evenly;
-        width: 100%;
-        border-bottom: none;
-        padding: 0px;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+    }
+    &__option {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        
+        button {
+            margin-top: 10px;
+        }
     }
 }
 

@@ -1,31 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DOCX,
   FINISH_REQUEST,
   REMOVE_ALL_CARTRIDGE,
-  REMOVE_CARTRIDGE,
-  SHOW_MODAL_ADD_CARTRIDGE,
 } from "../../../redux/types";
-import SelectBranchRequest from "../SelectBranchRequest/SelectBranchRequest";
 
 import "./Cartridge.scss";
 
-export default function Cartridge() {
-  const modal = useSelector((state) => state.equipment.modal);
+export default function Cartridge({note}) {
   const cartridge = useSelector((state) => state.equipment.cartridges);
   const dispatch = useDispatch();
 
-  const [totalCount, setTotalCount] = useState(0);
-  cartridge.forEach(el=> {
-    // setTotalCount(prev => +prev+el.count )
-    console.log(totalCount);
-  })
+  const totalCount = cartridge.reduce((prev, value) => prev+ +value.count, 0);
+
   return (
     <>
     {cartridge.length !== 0 ? (
       <>
-      {/* <div>Итого картриджей в заявке {totalCount}</div> */}
+      <div className='preview__apllication'>
+        <div className='preview__apllication__cartridge'>
+        <h3>Картриджи</h3>
+        <hr />
+        {cartridge.map((el, index) => {
+          return (
+            <div key={index}>
+            <div>{el.model} в количестве {el.count}</div>
+          </div>
+          )
+        })}
+        <div>Примечания {note || 'отсутствуют'}</div>
+        <div>Итого картриджей в заявке {totalCount}</div>
+      </div>
+        <div className='preview__apllication__option'>
+          <button className='btn btn-success'>Изменить</button>
+          <button className='btn btn-danger'>Удалить</button>
+          <button className='btn btn-warning'>Отложить</button>
+        </div>
+      </div>
       </> ) : null
     }
 

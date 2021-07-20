@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartridges_types } from '../../../redux/defaultValues';
 
-export default function SelectModel() {
+export default function SelectModel({note, setNote}) {
 
     const branch = useSelector(state=> state.equipment.branch);
     const dispatch = useDispatch();
+
 
     return (
 
@@ -47,6 +48,9 @@ export default function SelectModel() {
                     </div>
                         )
                 })}
+                            <div> 
+                                <input type="text" value={note} onChange={e=> setNote(e.target.value)} />
+                            </div>
             </div>
     )
 }

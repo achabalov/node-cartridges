@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SelectBranch from "../formComponent/SelectBranch";
 import ModalCartridgeForm from "../ModalAddForm/ModalCartridgeForm";
@@ -15,6 +15,9 @@ import { GetDocxGenerator, PostDocxGenerator } from "../../../async/docxGenerato
 export function FormCartridge() {
   const dispatch = useDispatch();
   const branch = useSelector(state => state.equipment.branch);
+
+  const [note, setNote] = useState('');
+
   useEffect(() => {
     branch && dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: 'addCartridge'} });
   }, [branch]);
@@ -53,10 +56,10 @@ export function FormCartridge() {
           >
             Добавить
             </button>: ''}
-          <ModalCartridgeForm />
+          <ModalCartridgeForm note={note} setNote={setNote}/>
         </div>
       </form>
-      <Cartridge />
+      <Cartridge note={note} />
     </>
   );
 }
