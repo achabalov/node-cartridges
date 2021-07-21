@@ -40,13 +40,15 @@ export default function ModalCartridgeForm({ note, setNote}) {
           {
 
             cartridges.length !== 0 ? (
-              <button className='btn btn-success'>Подтвердить заявку</button>
+              <button className='btn btn-success' onClick={() => 
+                dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: false} })
+              }>Подтвердить заявку</button>
             ) : null
 
           }
           {/* <label htmlFor="">Укажите количество</label> */}
           {/* <SelectCartridgeCount /> */}
-          {model ? (
+          {/* {model ? (
             <button
               className="btn btn-success"
               onClick={() => {
@@ -63,14 +65,16 @@ export default function ModalCartridgeForm({ note, setNote}) {
             </button>
           ) : (
             ""
-          )}
+          )} */}
           <button
             className="btn btn-danger"
-            onClick={() =>
+            onClick={() => {
               dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: false} })
+              dispatch({type: "CARTRIDGE_RESET"})
+            }
             }
           >
-            Закрыть
+            Отменить
           </button>
         </div>
       </div>

@@ -64,16 +64,22 @@ export const reducerEquipment = (state = initialState, action) => {
         cartridges: [...newCount]
       }
     case FINISH_REQUEST:
-      const oneRequest = action.payload[0].branch;
+      // const oneRequest = action.payload[0].branch;
       return {
         ...state,
-        finishRequestCartridges: [
-          ...state.finishRequestCartridges,
-          {
-            [oneRequest]: action.payload,
-          },
-        ],
+        finishRequestCartridges: [...state.finishRequestCartridges, action.payload],
       };
+      // case FINISH_REQUEST:
+      // const oneRequest = action.payload[0].branch;
+      // return {
+      //   ...state,
+      //   finishRequestCartridges: [
+      //     ...state.finishRequestCartridges,
+      //     {
+      //       [oneRequest]: action.payload,
+      //     },
+      //   ],
+      // };
     case DOCX:
       const obj = {};
       cartridges_types.forEach((el) => {
@@ -87,6 +93,11 @@ export const reducerEquipment = (state = initialState, action) => {
         ...state,
         docxGenerator: [obj],
       };
+    case "CARTRIDGE_RESET":
+      return {
+        ...state,
+        cartridges: []
+      }
 
     case DOCX_RESET:
       cartridges_types.forEach(type=> type.active = true)

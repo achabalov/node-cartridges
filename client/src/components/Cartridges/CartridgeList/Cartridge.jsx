@@ -4,6 +4,7 @@ import {
   DOCX,
   FINISH_REQUEST,
   REMOVE_ALL_CARTRIDGE,
+  SHOW_MODAL_ADD_CARTRIDGE,
 } from "../../../redux/types";
 
 import "./Cartridge.scss";
@@ -33,9 +34,18 @@ export default function Cartridge({note}) {
         <div>Итого картриджей в заявке {totalCount}</div>
       </div>
         <div className='preview__apllication__option'>
-          <button className='btn btn-success'>Изменить</button>
-          <button className='btn btn-danger'>Удалить</button>
-          <button className='btn btn-warning'>Отложить</button>
+          <button 
+          className='btn btn-success'
+          onClick={()=> {
+            dispatch({type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: 'addCartridge'}})
+          }}
+          >Изменить</button>
+          <button 
+          className='btn btn-danger'
+          onClick={()=> {
+            dispatch({type: 'CARTRIDGE_RESET'})
+          }}
+          >Удалить</button>
         </div>
       </div>
       </> ) : null

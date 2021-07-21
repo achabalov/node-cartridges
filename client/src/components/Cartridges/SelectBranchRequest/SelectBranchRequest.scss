@@ -1,11 +1,13 @@
 .finish__request {
     display: flex;
     flex-flow: row nowrap;
-    border: 1px solid gray;
+    border: 1px solid #bbb;
+    border-radius: 3px;
     justify-content: flex-start;
     align-items: center;
     font-size: 1.1rem;
     background-color: #fff;
+
     &__branch {
         display: flex;
         flex-flow: column nowrap;
@@ -15,18 +17,18 @@
     }
     &__cartridge {
         display: flex;
-        flex-flow: row;
+        flex-flow: row nowrap;
         align-items: center;
         & > * {
             padding: 10px;
-            border-left: 1px solid black;
+            border-left: 1px solid #bbb;
             display: flex;
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
         }
         &__model {
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid #bbb;
             font-weight: bold;
         }
         &__count {
