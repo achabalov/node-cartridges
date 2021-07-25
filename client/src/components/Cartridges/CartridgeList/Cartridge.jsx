@@ -1,8 +1,7 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DOCX,
-  FINISH_REQUEST,
   REMOVE_ALL_CARTRIDGE,
   SHOW_MODAL_ADD_CARTRIDGE,
 } from "../../../redux/types";
@@ -11,12 +10,33 @@ import "./Cartridge.scss";
 
 export default function Cartridge({note}) {
   const cartridge = useSelector((state) => state.equipment.cartridges);
+  const branch = useSelector((state) => state.equipment.branch);
   const dispatch = useDispatch();
 
   const totalCount = cartridge.reduce((prev, value) => prev+ +value.count, 0);
+  const [dateImport, setDateImport] = useState('');
+  const description = {
+    branch,
+    id: Date.now(),
+    dateToRequest: dateImport,
+    totalCount,
+    note
+  }
 
+  useEffect(()=> {
+    const date = new Date();
+    const year = date.getFullYear();
+    console.log(date.getMonth()< 10);
+    const month = date.getMonth()+1 < 10 ? '0' +(date.getMonth()+1): date.getMonth()+1;
+    const day = date.getDate();
+    setDateImport(day+':'+month+':'+year)
+  }, [])
+  
   return (
     <>
+    
+    {/* <MyForm date={dateImport} setTimeState={setDateImport} /> */}
+
     {cartridge.length !== 0 ? (
       <>
       <div className='preview__apllication'>
@@ -59,7 +79,7 @@ export default function Cartridge({note}) {
           <button
             className="btn btn-success"
             onClick={() => {
-              dispatch({ type: FINISH_REQUEST, payload: cartridge });
+              dispatch({ type: "FINISH_ADDED", payload: cartridge, description });
               dispatch({ type: REMOVE_ALL_CARTRIDGE });
               dispatch({ type: DOCX, payload: cartridge });
             }}

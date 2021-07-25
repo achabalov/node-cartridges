@@ -31,6 +31,8 @@ export default function FormDevices() {
 
   function onChangeHandler(event) {
     event.preventDefault();
+    console.log(dateImportOnSU);
+    console.log(new Date());
     const newDevices = {
       id: Date.now(),
       typeDevices,
@@ -99,7 +101,7 @@ export default function FormDevices() {
               className="device__form__input"
               value={inventoryNumber}
               onChange={(event) => onAddInventoryNumber(event)}
-            />
+            /> 
           </div>
         </div>
         <div className="device__form">

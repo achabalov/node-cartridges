@@ -1,0 +1,124 @@
+.main__apllication {
+    width: 80%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    margin: 30px auto;
+    padding: 10px 30px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 0 30px 0 30px;
+    font-size: 1.2rem;
+    box-shadow: 1px 1px 3px 1px;
+    cursor: pointer;
+    margin-bottom: 30px;
+
+    &__preview__row {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+        width: 100%;
+
+        &:nth-child(1) {
+            border-bottom: 1px solid black;
+            padding: -40px;
+            & h4 {
+                @media screen and (min-width: 700px) and (max-width: 1200px) {
+                    height: 60px;
+                }
+                @media screen and (min-width: 1069px) {
+                    height: 35px;
+                }
+                @media screen and (min-width: 1553px) {
+                    height: 10px;
+                }
+            }
+        }
+
+        &:nth-child(2) {
+            margin-top: 10px;
+            & h5 {
+                @media screen and (min-width: 700px) and (max-width: 949px) {
+                    height: 100px;
+                }
+                @media screen and (min-width: 950px) {
+                    height: 75px;
+                }
+                @media screen and (min-width: 988px) {
+                    height: 50px;
+                }
+                @media screen and (min-width: 1277px) {
+                    height: 30px;
+                }
+            }
+        }
+
+
+        &__list {
+            display: flex;
+            flex-flow: column;
+            width: 30%;
+            max-width: 30%;
+
+            &__cartridge {
+                display: flex;
+                flex-flow: row wrap;
+                text-align: left;
+                transition: all 2s;
+                &__block {
+                    margin-right: 15px;
+                    &__model {
+                        border-bottom: 1px solid gray;
+                    }
+                    &__count {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+// .finish__request {
+//     display: flex;
+//     flex-flow: row nowrap;
+//     border: 1px solid #bbb;
+//     border-radius: 3px;
+//     justify-content: flex-start;
+//     align-items: center;
+//     font-size: 1.1rem;
+//     background-color: #fff;
+
+//     &__branch {
+//         display: flex;
+//         flex-flow: column nowrap;
+//         align-items: center;
+//         padding: 10px;
+//         font-weight: bold;
+//     }
+//     &__cartridge {
+//         display: flex;
+//         flex-flow: row nowrap;
+//         align-items: center;
+//         & > * {
+//             padding: 10px;
+//             border-left: 1px solid #bbb;
+//             display: flex;
+//             flex-flow: column nowrap;
+//             justify-content: center;
+//             align-items: center;
+//         }
+//         &__model {
+//             border-bottom: 1px solid #bbb;
+//             font-weight: bold;
+//         }
+//         &__count {
+//             font-weight: bold;
+//         }
+//         &__button {
+//             display: flex;
+//             flex-flow: column;
+//         }
+//     }
+// } 

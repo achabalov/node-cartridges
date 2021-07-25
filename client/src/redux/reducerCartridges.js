@@ -15,14 +15,13 @@ import { cartridges_types } from "./defaultValues";
 const initialState = {
   cartridges: [],
   modal: false,
-  typeModal: '',
-  id: '',
+  typeModal: "",
+  id: "",
   branch: "",
   addLoading: false,
   finishRequestCartridges: [],
   docxGenerator: [],
 };
-
 
 export const reducerEquipment = (state = initialState, action) => {
   switch (action.type) {
@@ -40,46 +39,49 @@ export const reducerEquipment = (state = initialState, action) => {
         ...state,
         cartridges: [...filterBranch],
       };
-      case 'ADD_MODEL_COUNT':
-        cartridges_types.forEach(el=> {
-          if(el.model === action.payload.model) {
-            el.count = action.payload.count;
-          } 
-        })
-        return {
-            ...state,
-            cartridges: [...state.cartridges, action.payload]
+    case "ADD_MODEL_COUNT":
+      cartridges_types.forEach((el) => {
+        if (el.model === action.payload.model) {
+          el.count = action.payload.count;
         }
-    case 'CHANGE_CARTRIDGE_COUNT':
-      const newCount = state.cartridges.map(elem=> {
-        if(elem.id === state.id) {
-          elem.count = action.payload.count
-          return elem;
-        } else {
-          return elem
-        }
-      })
+      });
       return {
         ...state,
-        cartridges: [...newCount]
-      }
+        cartridges: [...state.cartridges, action.payload],
+      };
+    case "CHANGE_CARTRIDGE_COUNT":
+      const newCount = state.cartridges.map((elem) => {
+        if (elem.id === state.id) {
+          elem.count = action.payload.count;
+          return elem;
+        } else {
+          return elem;
+        }
+      });
+      return {
+        ...state,
+        cartridges: [...newCount],
+      };
     case FINISH_REQUEST:
       // const oneRequest = action.payload[0].branch;
       return {
         ...state,
-        finishRequestCartridges: [...state.finishRequestCartridges, action.payload],
+        finishRequestCartridges: [
+          ...state.finishRequestCartridges,
+          action.payload,
+        ],
       };
-      // case FINISH_REQUEST:
-      // const oneRequest = action.payload[0].branch;
-      // return {
-      //   ...state,
-      //   finishRequestCartridges: [
-      //     ...state.finishRequestCartridges,
-      //     {
-      //       [oneRequest]: action.payload,
-      //     },
-      //   ],
-      // };
+    // case FINISH_REQUEST:
+    // const oneRequest = action.payload[0].branch;
+    // return {
+    //   ...state,
+    //   finishRequestCartridges: [
+    //     ...state.finishRequestCartridges,
+    //     {
+    //       [oneRequest]: action.payload,
+    //     },
+    //   ],
+    // };
     case DOCX:
       const obj = {};
       cartridges_types.forEach((el) => {
@@ -96,11 +98,11 @@ export const reducerEquipment = (state = initialState, action) => {
     case "CARTRIDGE_RESET":
       return {
         ...state,
-        cartridges: []
-      }
+        cartridges: [],
+      };
 
     case DOCX_RESET:
-      cartridges_types.forEach(type=> type.active = true)
+      cartridges_types.forEach((type) => (type.active = true));
       return {
         ...state,
         docxGenerator: [],
@@ -119,15 +121,15 @@ export const reducerEquipment = (state = initialState, action) => {
         ...state,
         modal: action.payload.modal,
         typeModal: action.payload.typeModal,
-        id: action.payload.id
+        id: action.payload.id,
       };
 
     case ADD_BRANCH_CARTRIDGES:
-      cartridges_types.forEach(cartridge => cartridge.count = 0)
+      cartridges_types.forEach((cartridge) => (cartridge.count = 0));
       return {
         ...state,
         branch: action.payload,
-        typeModal: 'addCartridge'
+        typeModal: "addCartridge",
       };
 
     case REMOVE_CARTRIDGE:

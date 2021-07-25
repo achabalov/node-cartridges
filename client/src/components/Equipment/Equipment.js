@@ -1,7 +1,7 @@
 import React from "react";
 import Devices from "../Devices/Devices";
 import SelectBranch from "../Cartridges/formComponent/SelectBranch";
-import SelectBranchRequest from "../Cartridges/SelectBranchRequest/SelectBranchRequest";
+import MainApplications from "../Cartridges/MainApplications/MainApplications";
 import "./Equipment.scss";
 import { ADD_BRANCH_CARTRIDGES, DEVICE_FILTER_BRANCH } from "../../redux/types";
 
@@ -12,7 +12,7 @@ export default function Equipment() {
       <hr style={{ width: "70%" }} />
       <div className="equipment__cartridges">
       <h3>Картриджи в заправку</h3>
-        <SelectBranchRequest />
+        <MainApplications />
       </div>
       <hr style={{ width: "90%" }} />
       <div className="__devices">
