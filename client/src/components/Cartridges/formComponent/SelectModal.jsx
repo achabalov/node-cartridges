@@ -2,14 +2,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartridges_types } from '../../../redux/defaultValues';
 
-export default function SelectModel({note, setNote}) {
+export default function SelectModel({id, flag, note, setNote}) {
 
     const branch = useSelector(state=> state.equipment.branch);
     const dispatch = useDispatch();
 
 
     return (
-
             <div className='modal__add'>
                 {cartridges_types.map((el, index)=> { 
                     return (
@@ -26,7 +25,14 @@ export default function SelectModel({note, setNote}) {
                             <select 
                             className='form-select' 
                             onChange={event => 
-                                    dispatch({type: 'ADD_MODEL_COUNT', 
+                                    flag === 'transferFromWarehouse' ?
+                                    dispatch({type: 'ADD_TRANSFER_WAREHOUSE',
+                                     payload: {id, branch, model: el.model, count: event.target.value}})
+                                    : flag === 'actualReturn' ?
+                                    dispatch({type: 'actualReturn',
+                                    payload: {id, branch, model: el.model, count: event.target.value}})
+                                    :
+                                    dispatch({type: 'ADD_MODEL_COUNT',
                                     payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})}
                             defaultValue={'0'}>
                                 <option value="0">0</option>
