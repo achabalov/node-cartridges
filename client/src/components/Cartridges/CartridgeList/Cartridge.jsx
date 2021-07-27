@@ -34,9 +34,6 @@ export default function Cartridge({note}) {
   
   return (
     <>
-    
-    {/* <MyForm date={dateImport} setTimeState={setDateImport} /> */}
-
     {cartridge.length !== 0 ? (
       <>
       <div className='preview__apllication'>

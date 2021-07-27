@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SHOW_MODAL_ADD_CARTRIDGE } from "../../../redux/types";
 import ModalCartridgeForm from "../ModalAddForm/ModalCartridgeForm";
@@ -9,9 +9,7 @@ export default function SelectBranchRequest() {
     (state) => state.finish.finishRequestCartridges
   );
 
-  useEffect(()=> {
-    console.log('render mainApplication');
-  }, [finishReques.transferFromWarehouse])
+  const [anyState, setAnyState] = useState('')
 
   const [showCartridge, setShowCartridge] = useState(false);
   const [note, setNote] = useState('');
@@ -67,67 +65,91 @@ export default function SelectBranchRequest() {
           </button>
         </div>
         {showCartridge ? (
-          <div className="main__apllication__preview__row__list__cartridge">
-            <div className="main__apllication__preview__row__list__cartridge__block">
-              <div className="main__apllication__preview__row__list__cartridge__block__model">
+        <div className='about__cartridge'>
+          <div className='about__cartridge__model'>
+
+              <div className="">
                 Модель
               </div>
-              <div className="main__apllication__preview__row__list__cartridge__block__count">
+              <div className="">
                 Количество
-              </div>
             </div>
+            {finishRequest.transferFromWarehouse.length !== 0 ?
+            <>
+            <div>Отправленные</div>
+            <div>со склада</div>
+            </>
+            : null}
+            
+            {finishRequest.actualReturn.length !== 0 ?
+            <>
+            <div>Фактический</div>
+            <div>Возврат</div>
+            </>
+            : null}
+          </div>
+          
+            <div className='about__cartridge__count'>
+              <div className='about__cartridge__count__block'>
             {finishRequest.cartridges.map((el, index) => {
               return (
-                <div key={index} className="main__apllication__preview__row__list__cartridge__block">
-                  <div className="main__apllication__preview__row__list__cartridge__block__model">
+                <div key={index} className="">
+                  <div className="">
                     {el.model}
                   </div>
-                  <div className="main__apllication__preview__row__list__cartridge__block__count">
+                  <div className="">
                   Кол-во {el.count}
                   </div>
                 </div>
               );
             })}
+            </div>
+
+            <div className='about__cartridge__count__block'>
             {finishRequest.transferFromWarehouse.map((el, index) => {
               return (
-                <div key={index} className="main__apllication__preview__row__list__cartridge__block">
-                  <div className="main__apllication__preview__row__list__cartridge__block__model">
+                <div key={index} className="">
+                  <div className="">
                     {el.model}
                   </div>
-                  <div className="main__apllication__preview__row__list__cartridge__block__count">
+                  <div className="">
                     Кол-во {el.count}
                   </div>
                 </div>
               );
             })}
+            </div>
+            <div className='about__cartridge__count__block'>
             {finishRequest.actualReturn.map((el, index) => {
               return (
-                <div key={index} className="main__apllication__preview__row__list__cartridge__block">
-                  <div className="main__apllication__preview__row__list__cartridge__block__model">
+                <div key={index} className="">
+                  <div className="">
                     {el.model}
                   </div>
-                  <div className="main__apllication__preview__row__list__cartridge__block__count">
+                  <div className="">
                     Кол-во {el.count}
                   </div>
                 </div>
               );
             })}
+            </div>
+            </div>
 
-            <div className='main__apllication__preview__row__list__cartridge'>
+            <div className='about__cartridge__btn'>
                 <button 
-                className='btn btn-primary'
+                className='btn btn-info'
                 onClick={()=> dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: "transferFromWarehouse"} })}
             >
-                  Добавить сколько отправили со склада
+                  Отправили со склада
                 </button>
                 <button 
-                className='btn btn-primary'
+                className='btn btn-info'
                 onClick={()=> dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: "actualReturn"} })}
                 >
-                  Указать фактический возврат
+                  Фактический возврат
                 </button>
+            <ModalCartridgeForm id={finishRequest.descriptionField.id} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
             </div>
-          <ModalCartridgeForm id={finishRequest.descriptionField.id} note={note} setNote={setNote}/>
           </div>
         ) : null}
       </div>
@@ -136,6 +158,32 @@ export default function SelectBranchRequest() {
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ===============================================================================================================
 

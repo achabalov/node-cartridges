@@ -1,5 +1,5 @@
 .main__apllication {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-evenly;
@@ -49,9 +49,8 @@
                 @media screen and (min-width: 1277px) {
                     height: 30px;
                 }
-            }
+            } 
         }
-
 
         &__list {
             display: flex;
@@ -76,49 +75,39 @@
             }
         }
     }
+    .about__cartridge {
+        display: flex;
+        flex-flow: row nowrap;
+        text-align: left;
+    
+        &__model {
+            display: flex;
+            flex-flow: column nowrap;
+            width: 150px;
+        }
+    
+        &__count {
+            display: flex;
+            flex-flow: column;
+            &__block {
+                display: flex;
+                flex-flow: row nowrap;
+                > * {
+                    margin-right: 5px;
+                    width: 90px;
+                }
+            }
+            width: 80%;
+            
+        }
+    
+        &__btn {
+            display: flex;
+            flex-flow: column wrap;
+            width: 15%;
+            .btn {
+                margin-bottom: 10px;
+            }
+        }
+    }
 }
-
-
-
-// .finish__request {
-//     display: flex;
-//     flex-flow: row nowrap;
-//     border: 1px solid #bbb;
-//     border-radius: 3px;
-//     justify-content: flex-start;
-//     align-items: center;
-//     font-size: 1.1rem;
-//     background-color: #fff;
-
-//     &__branch {
-//         display: flex;
-//         flex-flow: column nowrap;
-//         align-items: center;
-//         padding: 10px;
-//         font-weight: bold;
-//     }
-//     &__cartridge {
-//         display: flex;
-//         flex-flow: row nowrap;
-//         align-items: center;
-//         & > * {
-//             padding: 10px;
-//             border-left: 1px solid #bbb;
-//             display: flex;
-//             flex-flow: column nowrap;
-//             justify-content: center;
-//             align-items: center;
-//         }
-//         &__model {
-//             border-bottom: 1px solid #bbb;
-//             font-weight: bold;
-//         }
-//         &__count {
-//             font-weight: bold;
-//         }
-//         &__button {
-//             display: flex;
-//             flex-flow: column;
-//         }
-//     }
-// } 

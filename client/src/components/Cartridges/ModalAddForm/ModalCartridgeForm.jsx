@@ -7,7 +7,7 @@ import {
   SHOW_MODAL_ADD_CARTRIDGE,
 } from "../../../redux/types";
 
-export default function ModalCartridgeForm({ id, note, setNote}) {
+export default function ModalCartridgeForm({ id, note, setNote, anyState, setAnyState}) {
   const modal = useSelector((state) => state.equipment.modal);
   const typeModal = useSelector((state) => state.equipment.typeModal);
   const model = useSelector((state) => state.cartridge.model);
@@ -71,7 +71,7 @@ export default function ModalCartridgeForm({ id, note, setNote}) {
         onClick={(e) => e.stopPropagation()}
       >
         <label htmlFor="">Выберите модель</label>
-        <SelectModel id={id} flag={'transferFromWarehouse'} note={note} setNote={setNote}/>
+        <SelectModel id={id} flag={'transferFromWarehouse'} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
         {
 
           cartridges.length !== 0 ? (
@@ -108,7 +108,7 @@ export default function ModalCartridgeForm({ id, note, setNote}) {
         onClick={(e) => e.stopPropagation()}
       >
         <label htmlFor="">Выберите модель</label>
-        <SelectModel id={id} flag={'actualReturn'} note={note} setNote={setNote}/>
+        <SelectModel id={id} flag={'actualReturn'} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
         {
 
           cartridges.length !== 0 ? (

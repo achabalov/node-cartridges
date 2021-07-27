@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartridges_types } from '../../../redux/defaultValues';
 
-export default function SelectModel({id, flag, note, setNote}) {
+export default function SelectModel({id, flag, note, setNote, anyState, setAnyState}) {
 
     const branch = useSelector(state=> state.equipment.branch);
     const dispatch = useDispatch();
@@ -24,16 +24,19 @@ export default function SelectModel({id, flag, note, setNote}) {
                             </div>
                             <select 
                             className='form-select' 
-                            onChange={event => 
-                                    flag === 'transferFromWarehouse' ?
+                            onChange={event => {
+                                    if (flag === 'transferFromWarehouse') {
                                     dispatch({type: 'ADD_TRANSFER_WAREHOUSE',
-                                     payload: {id, branch, model: el.model, count: event.target.value}})
-                                    : flag === 'actualReturn' ?
-                                    dispatch({type: 'actualReturn',
                                     payload: {id, branch, model: el.model, count: event.target.value}})
-                                    :
-                                    dispatch({type: 'ADD_MODEL_COUNT',
-                                    payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})}
+                                    setAnyState(prev=> prev += ' ')
+                                    } else if(flag === 'actualReturn') {
+                                        dispatch({type: 'actualReturn',
+                                        payload: {id, branch, model: el.model, count: event.target.value}})
+                                    setAnyState(prev=> prev += ' ')
+                                    } else {
+                                        dispatch({type: 'ADD_MODEL_COUNT',
+                                        payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})
+                                    }}}
                             defaultValue={'0'}>
                                 <option value="0">0</option>
                                 <option value="1">1</option>

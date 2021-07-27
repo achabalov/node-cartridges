@@ -109,6 +109,9 @@ export const reducerEquipment = (state = initialState, action) => {
       };
 
     case SHOW_MODAL_ADD_CARTRIDGE:
+      if(!action.payload.modal) {
+        cartridges_types.forEach((el) => el.count = 0);
+      }
       return {
         ...state,
         modal: action.payload.modal,
