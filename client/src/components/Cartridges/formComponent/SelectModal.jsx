@@ -36,6 +36,11 @@ export default function SelectModel({id, flag, note, setNote, anyState, setAnySt
                                     } else {
                                         dispatch({type: 'ADD_MODEL_COUNT',
                                         payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})
+                                        cartridges_types.forEach((elem) => {
+                                            if (elem.model === el.model) {
+                                                elem.count = event.target.value;
+                                            }
+                                          });
                                     }}}
                             defaultValue={'0'}>
                                 <option value="0">0</option>

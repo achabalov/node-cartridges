@@ -40,35 +40,45 @@ export const reducerEquipment = (state = initialState, action) => {
         cartridges: [...filterBranch],
       };
     case "ADD_MODEL_COUNT":
-      cartridges_types.forEach((el) => {
-        if (el.model === action.payload.model) {
-          el.count = action.payload.count;
-        }
-      });
 
     const index = state.cartridges.findIndex(elem => elem.model === action.payload.model)
-
-    if(index !== -1) {
-      console.log(index);
-      console.log(action.payload.count);
-      if(action.payload.count === "0") {
-        console.log('delete');
-        state.cartridges.splice(index, 1);
-        console.log(state.cartridges);
-      } else {
-        state.cartridges[index].count = Number(action.payload.count);
-      }
-
-      return {
-        ...state,
-        cartridges: [...state.cartridges]
+    let newCart = [...state.cartridges];
+    
+    if(action.payload.count !== '0') {
+      const index = newCart.findIndex(el => el.model === action.payload.model);
+      if(index === -1) {
+        newCart.push(action.payload);
       }
     } else {
-      return {
-        ...state,
-        cartridges: [...state.cartridges, action.payload],
-      };
+      newCart = newCart.filter(el=> {
+        console.log(el.model, action.payload.model);
+        return el.model !== action.payload.model
+      })
     }
+    console.log(newCart);
+    return {
+      ...state,
+      cartridges: [...newCart]
+    }
+
+    // if(index !== -1) {
+
+    //   if(action.payload.count === "0") {
+    //     state.cartridges.splice(index, 1);
+    //   } else {
+    //     state.cartridges[index].count = Number(action.payload.count);
+    //   }
+
+    //   return {
+    //     ...state,
+    //     cartridges: [...state.cartridges]
+    //   }
+    // } else {
+    //   return {
+    //     ...state,
+    //     cartridges: [...state.cartridges, action.payload],
+    //   };
+    
 
     case "CHANGE_CARTRIDGE_COUNT":
       const newCount = state.cartridges.map((elem) => {

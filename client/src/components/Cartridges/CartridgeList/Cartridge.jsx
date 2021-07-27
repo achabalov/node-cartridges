@@ -67,7 +67,7 @@ export default function Cartridge({note}) {
       </div>
       <div>
           <hr />
-          <h3>Проверьте данные которые внесли, если всё верно сформируйте</h3>
+          <h3>Проверьте данные которые внесли, если всё верно сформируйте реестр</h3>
           <br />
           <button
             className="btn btn-success"
