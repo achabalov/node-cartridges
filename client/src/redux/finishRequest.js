@@ -2,18 +2,6 @@ import {cartridges_types} from '../redux/defaultValues';
 
 const initialState = {
     finishRequestCartridges: [],
-    // descriptionField: {
-    //   id: "",
-    //   allCartridge: 0,
-    //   dateToRequest: "",
-    //   dateToExportOnSu: "",
-    //   dateToImportOnSu: "",
-    //   branch: "",
-    //   totalCount: 0,
-    //   note: ''
-    // },
-    // cartridges: [],
-    // returnCartdige: []
     }
 
 export const finishCartridgeReducer = (state = initialState, action) => {
@@ -32,7 +20,9 @@ export const finishCartridgeReducer = (state = initialState, action) => {
                     },
                     cartridges: [...action.payload],
                     transferFromWarehouse: [],
-                    actualReturn: []
+                    actualReturn: [],
+                    countTransferFromWarehouse: 0,
+                    countActualReturn: 0
                 }]
             }
         case 'ADD_TRANSFER_WAREHOUSE':
@@ -45,6 +35,12 @@ export const finishCartridgeReducer = (state = initialState, action) => {
                 if(el.descriptionField.id === action.payload.id) {
                     const index = el.transferFromWarehouse.findIndex(elem => elem.model === action.payload.model)
                         index !== -1 ? el.transferFromWarehouse[index].count = Number(action.payload.count) : el.transferFromWarehouse.push(action.payload)
+                }
+            })
+            state.finishRequestCartridges.forEach(el=> {
+                if(el.descriptionField.id === action.payload.id) {
+                    const count = el.transferFromWarehouse.reduce((acc, val)=> acc+ +val.count, 0);
+                    el.countTransferFromWarehouse = Number(count)
                 }
             })
             return {
@@ -60,6 +56,12 @@ export const finishCartridgeReducer = (state = initialState, action) => {
                 if(el.descriptionField.id === action.payload.id) {
                     const index = el.actualReturn.findIndex(elem => elem.model === action.payload.model)
                         index !== -1 ? el.actualReturn[index].count = Number(action.payload.count) : el.actualReturn.push(action.payload)
+                }
+            })
+            state.finishRequestCartridges.forEach(el=> {
+                if(el.descriptionField.id === action.payload.id) {
+                    const count = el.actualReturn.reduce((acc, val)=> acc+ +val.count, 0);
+                    el.countActualReturn = Number(count)
                 }
             })
             return {

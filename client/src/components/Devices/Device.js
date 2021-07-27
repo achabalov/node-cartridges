@@ -12,7 +12,6 @@ import "./device.scss";
 export default function Devices({ device }) {
   const dispatch = useDispatch();
 
-  // повторяющийся код отслеживания элементов
   const [dateExportToRepair, setdataExportToRepair] = useState({
     selectedDay: undefined,
     isEmpty: true,

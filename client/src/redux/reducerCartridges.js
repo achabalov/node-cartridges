@@ -45,10 +45,31 @@ export const reducerEquipment = (state = initialState, action) => {
           el.count = action.payload.count;
         }
       });
+
+    const index = state.cartridges.findIndex(elem => elem.model === action.payload.model)
+
+    if(index !== -1) {
+      console.log(index);
+      console.log(action.payload.count);
+      if(action.payload.count === "0") {
+        console.log('delete');
+        state.cartridges.splice(index, 1);
+        console.log(state.cartridges);
+      } else {
+        state.cartridges[index].count = Number(action.payload.count);
+      }
+
+      return {
+        ...state,
+        cartridges: [...state.cartridges]
+      }
+    } else {
       return {
         ...state,
         cartridges: [...state.cartridges, action.payload],
       };
+    }
+
     case "CHANGE_CARTRIDGE_COUNT":
       const newCount = state.cartridges.map((elem) => {
         if (elem.id === state.id) {
@@ -56,7 +77,7 @@ export const reducerEquipment = (state = initialState, action) => {
           return elem;
         } else {
           return elem;
-        }
+        } 
       });
       return {
         ...state,
