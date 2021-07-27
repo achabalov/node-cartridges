@@ -40,8 +40,6 @@ export const reducerEquipment = (state = initialState, action) => {
         cartridges: [...filterBranch],
       };
     case "ADD_MODEL_COUNT":
-
-    const index = state.cartridges.findIndex(elem => elem.model === action.payload.model)
     let newCart = [...state.cartridges];
     
     if(action.payload.count !== '0') {
@@ -49,13 +47,8 @@ export const reducerEquipment = (state = initialState, action) => {
       if(index === -1) {
         newCart.push(action.payload);
       }
-    } else {
-      newCart = newCart.filter(el=> {
-        console.log(el.model, action.payload.model);
-        return el.model !== action.payload.model
-      })
-    }
-    console.log(newCart);
+    } else newCart = newCart.filter(el=> el.model !== action.payload.model)
+    
     return {
       ...state,
       cartridges: [...newCart]
