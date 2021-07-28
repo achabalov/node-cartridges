@@ -1,4 +1,5 @@
 import {cartridges_types} from '../redux/defaultValues';
+import { ACTUAL_RETURN, ADD_TRANSFER_WAREHOUSE, CHANGE_ACTUAL_RETURN_COUNT, FINISH_ADDED } from './types';
 
 const initialState = {
     finishRequestCartridges: [],
@@ -6,7 +7,8 @@ const initialState = {
 
 export const finishCartridgeReducer = (state = initialState, action) => {
     switch(action.type) {
-        case "FINISH_ADDED":
+
+        case FINISH_ADDED:
             return {
                 ...state,
                 finishRequestCartridges: [...state.finishRequestCartridges, {
@@ -25,48 +27,66 @@ export const finishCartridgeReducer = (state = initialState, action) => {
                     countActualReturn: 0
                 }]
             }
-        case 'ADD_TRANSFER_WAREHOUSE':
-            cartridges_types.forEach((el) => {
-                if (el.model === action.payload.model) {
-                  el.count = action.payload.count;
-                }
-              });
-              state.finishRequestCartridges.forEach(el=> {
+        case ADD_TRANSFER_WAREHOUSE:
+            // глубокое копирование
+            const addNewTransfer = [...state.finishRequestCartridges];
+            // изменение внутри массива через перебор
+              addNewTransfer.forEach(el=> {
                 if(el.descriptionField.id === action.payload.id) {
                     const index = el.transferFromWarehouse.findIndex(elem => elem.model === action.payload.model)
                         index !== -1 ? el.transferFromWarehouse[index].count = Number(action.payload.count) : el.transferFromWarehouse.push(action.payload)
                 }
             })
-            state.finishRequestCartridges.forEach(el=> {
-                if(el.descriptionField.id === action.payload.id) {
-                    const count = el.transferFromWarehouse.reduce((acc, val)=> acc+ +val.count, 0);
-                    el.countTransferFromWarehouse = Number(count)
-                }
-            })
+            // передача измененного нового массива
             return {
-                ...state,                
+
+                finishCartridgeReducer: [{
+                    ...addNewTransfer
+                }]
             };
-        case 'actualReturn':
-            cartridges_types.forEach((el) => {
-                if (el.model === action.payload.model) {
-                  el.count = action.payload.count;
-                }
-              });
-            state.finishRequestCartridges.forEach(el=> {
-                if(el.descriptionField.id === action.payload.id) {
+
+        case ACTUAL_RETURN:
+            let addNewActualReturn = [...state.finishRequestCartridges];
+            if(action.payload.count !== '0') {
+            addNewActualReturn.forEach(el=> {
+                if(el.descriptionField.id === action.payload.id && action.payload.count !== '0') {
                     const index = el.actualReturn.findIndex(elem => elem.model === action.payload.model)
                         index !== -1 ? el.actualReturn[index].count = Number(action.payload.count) : el.actualReturn.push(action.payload)
+                } })
+            } else {
+                const index  = addNewActualReturn.findIndex(el=> el.descriptionField.id === action.payload.id)
+                console.log(addNewActualReturn, addNewActualReturn[index]);
+                if(index !== '-1') {
+                    addNewActualReturn[index] = addNewActualReturn[index].actualReturn.filter(el => el.model !== action.payload.model)
                 }
-            })
-            state.finishRequestCartridges.forEach(el=> {
+            }
+            
+            
+            // state.finishRequestCartridges.forEach(el=> {
+            //     if(el.descriptionField.id === action.payload.id) {
+            //         const count = el.actualReturn.reduce((acc, val)=> acc+ +val.count, 0);
+            //         el.countActualReturn = Number(count)
+            //     }
+            // })
+            return {
+                ...state,
+                finishRequestCartridges: [...addNewActualReturn]
+            };
+        case CHANGE_ACTUAL_RETURN_COUNT:
+            const newActualCount = [...state.finishRequestCartridges];
+
+            newActualCount.forEach(el => {
                 if(el.descriptionField.id === action.payload.id) {
                     const count = el.actualReturn.reduce((acc, val)=> acc+ +val.count, 0);
-                    el.countActualReturn = Number(count)
+                    el.countActualReturn = Number(count);
                 }
             })
+
             return {
-                ...state,                
-            };
+                ...state,
+                finishRequestCartridges: [...newActualCount]
+            }
+
         default : return state
         }
 }

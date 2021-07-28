@@ -64,7 +64,7 @@ export const reducerEquipment = (state = initialState, action) => {
 
     //   return {
     //     ...state,
-    //     cartridges: [...state.cartridges]
+    //     cartridges: [...state.cartridges] 
     //   }
     // } else {
     //   return {

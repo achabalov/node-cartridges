@@ -5,10 +5,9 @@ import ModalCartridgeForm from "../ModalAddForm/ModalCartridgeForm";
 import "./MainApplications.scss";
 
 export default function SelectBranchRequest() {
-  const finishReques = useSelector(
-    (state) => state.finish.finishRequestCartridges
-  );
+  const finishReques = useSelector((state) => state.finish.finishRequestCartridges);
 
+  console.log(finishReques);
   const [anyState, setAnyState] = useState('')
 
   const [showCartridge, setShowCartridge] = useState(false);

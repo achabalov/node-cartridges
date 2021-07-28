@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartridges_types } from '../../../redux/defaultValues';
+import { ACTUAL_RETURN, CHANGE_ACTUAL_RETURN_COUNT } from '../../../redux/types';
 
 export default function SelectModel({id, flag, note, setNote, anyState, setAnyState}) {
 
     const branch = useSelector(state=> state.equipment.branch);
     const dispatch = useDispatch();
-
 
     return (
             <div className='modal__add'>
@@ -28,11 +28,24 @@ export default function SelectModel({id, flag, note, setNote, anyState, setAnySt
                                     if (flag === 'transferFromWarehouse') {
                                     dispatch({type: 'ADD_TRANSFER_WAREHOUSE',
                                     payload: {id, branch, model: el.model, count: event.target.value}})
+                                    cartridges_types.forEach((elem) => {
+                                        if (elem.model === el.model) {
+                                            elem.count = event.target.value;
+                                        }
+                                      });
+                                    // dispatch({type: 'countTransferFromWarehouse', payload: {id, branch, model: el.model, count: event.target.value}})
                                     setAnyState(prev=> prev += ' ')
                                     } else if(flag === 'actualReturn') {
-                                        dispatch({type: 'actualReturn',
+                                        dispatch({type: ACTUAL_RETURN,
+                                        payload: {id, branch, model: el.model, count: event.target.value}})
+                                        dispatch({type: CHANGE_ACTUAL_RETURN_COUNT,
                                         payload: {id, branch, model: el.model, count: event.target.value}})
                                     setAnyState(prev=> prev += ' ')
+                                    cartridges_types.forEach((elem) => {
+                                        if (elem.model === el.model) {
+                                            elem.count = event.target.value;
+                                        }
+                                      });
                                     } else {
                                         dispatch({type: 'ADD_MODEL_COUNT',
                                         payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})

@@ -2,6 +2,7 @@ import React, {useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DOCX,
+  FINISH_ADDED,
   REMOVE_ALL_CARTRIDGE,
   SHOW_MODAL_ADD_CARTRIDGE,
 } from "../../../redux/types";
@@ -72,7 +73,7 @@ export default function Cartridge({note}) {
           <button
             className="btn btn-success"
             onClick={() => {
-              dispatch({ type: "FINISH_ADDED", payload: cartridge, description });
+              dispatch({ type: FINISH_ADDED, payload: cartridge, description });
               dispatch({ type: REMOVE_ALL_CARTRIDGE });
               dispatch({ type: DOCX, payload: cartridge });
             }}
