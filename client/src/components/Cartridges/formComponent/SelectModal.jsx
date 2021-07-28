@@ -36,6 +36,7 @@ export default function SelectModel({id, flag, note, setNote, anyState, setAnySt
                                     // dispatch({type: 'countTransferFromWarehouse', payload: {id, branch, model: el.model, count: event.target.value}})
                                     setAnyState(prev=> prev += ' ')
                                     } else if(flag === 'actualReturn') {
+                                        console.log('id', id);
                                         dispatch({type: ACTUAL_RETURN,
                                         payload: {id, branch, model: el.model, count: event.target.value}})
                                         dispatch({type: CHANGE_ACTUAL_RETURN_COUNT,

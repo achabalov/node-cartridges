@@ -3,7 +3,7 @@ import SelectModel from "../formComponent/SelectModal";
 import "./ModalCartridgeForm.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  SHOW_MODAL_ADD_CARTRIDGE,
+  SHOW_MODAL_ADD_CARTRIDGE, 
 } from "../../../redux/types";
 
 export default function ModalCartridgeForm({ id, note, setNote, anyState, setAnyState}) {
@@ -11,6 +11,8 @@ export default function ModalCartridgeForm({ id, note, setNote, anyState, setAny
   const typeModal = useSelector((state) => state.equipment.typeModal);
   const cartridges = useSelector((state) => state.equipment.cartridges);
   const dispatch = useDispatch();
+
+  console.log(id);
 
 
   

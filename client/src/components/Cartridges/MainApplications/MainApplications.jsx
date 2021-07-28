@@ -9,6 +9,7 @@ export default function SelectBranchRequest() {
 
   console.log(finishReques);
   const [anyState, setAnyState] = useState('')
+  console.log('render');
 
   const [showCartridge, setShowCartridge] = useState(false);
   const [note, setNote] = useState('');
@@ -58,12 +59,12 @@ export default function SelectBranchRequest() {
         <div>
           <button
             className="btn btn-info"
-            onClick={() => setShowCartridge((prev) => !prev)}
+            onClick={() => dispatch({type: 'ModalAbout', payload: !finishRequest.descriptionField.modal, id: finishRequest.descriptionField.id})}
           >
             Подробнее
           </button>
         </div>
-        {showCartridge ? (
+        {finishRequest.descriptionField.modal ? (
         <div className='about__cartridge'>
           <div className='about__cartridge__model'>
 
@@ -134,7 +135,7 @@ export default function SelectBranchRequest() {
             </div>
             </div>
 
-            <div className='about__cartridge__btn'>
+            <div className='about__cartridge__btn'> 
                 <button 
                 className='btn btn-info'
                 onClick={()=> dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: "transferFromWarehouse"} })}
@@ -147,10 +148,10 @@ export default function SelectBranchRequest() {
                 >
                   Фактический возврат
                 </button>
-            <ModalCartridgeForm id={finishRequest.descriptionField.id} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
             </div>
           </div>
         ) : null}
+      <ModalCartridgeForm id={finishRequest.descriptionField.id} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
       </div>
       )
     })}

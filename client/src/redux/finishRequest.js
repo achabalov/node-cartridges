@@ -1,4 +1,3 @@
-import {cartridges_types} from '../redux/defaultValues';
 import { ACTUAL_RETURN, ADD_TRANSFER_WAREHOUSE, CHANGE_ACTUAL_RETURN_COUNT, FINISH_ADDED } from './types';
 
 const initialState = {
@@ -15,6 +14,7 @@ export const finishCartridgeReducer = (state = initialState, action) => {
                     descriptionField: {
                         ...state.descriptionField,
                         id: action.description.id,
+                        modal: false,
                         branch: action.description.branch,
                         dateToRequest: action.description.dateToRequest,
                         totalCount: action.description.totalCount,
@@ -26,6 +26,16 @@ export const finishCartridgeReducer = (state = initialState, action) => {
                     countTransferFromWarehouse: 0,
                     countActualReturn: 0
                 }]
+            }
+        case 'ModalAbout': 
+        const newModal = [...state.finishRequestCartridges]
+        newModal.forEach(el=>  {
+            console.log(el.descriptionField.id , action.id );
+            const k = el.descriptionField.id === action.id ? el.descriptionField.modal = action.payload : null
+        })
+            return {
+                ...state,
+                finishRequestCartridges: [...newModal]
             }
         case ADD_TRANSFER_WAREHOUSE:
             // глубокое копирование
@@ -55,9 +65,9 @@ export const finishCartridgeReducer = (state = initialState, action) => {
                 } })
             } else {
                 const index  = addNewActualReturn.findIndex(el=> el.descriptionField.id === action.payload.id)
-                console.log(addNewActualReturn, addNewActualReturn[index]);
                 if(index !== '-1') {
-                    addNewActualReturn[index] = addNewActualReturn[index].actualReturn.filter(el => el.model !== action.payload.model)
+                    console.log(index, action.payload.id);
+                    addNewActualReturn[index].actualReturn = addNewActualReturn[index].actualReturn.filter(el => el.model !== action.payload.model)
                 }
             }
             
