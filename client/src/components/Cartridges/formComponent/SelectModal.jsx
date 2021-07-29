@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartridges_types } from '../../../redux/defaultValues';
-import { ACTUAL_RETURN, CHANGE_ACTUAL_RETURN_COUNT } from '../../../redux/types';
+import { ACTUAL_RETURN, ADD_TRANSFER_WAREHOUSE, CHANGE_ACTUAL_RETURN_COUNT, CHANGE_TRANSFER_WAREHOUSE_COUNTER } from '../../../redux/types';
 
 export default function SelectModel({id, flag, note, setNote, anyState, setAnyState}) {
 
@@ -26,8 +26,10 @@ export default function SelectModel({id, flag, note, setNote, anyState, setAnySt
                             className='form-select' 
                             onChange={event => {
                                     if (flag === 'transferFromWarehouse') {
-                                    dispatch({type: 'ADD_TRANSFER_WAREHOUSE',
+                                    dispatch({type: ADD_TRANSFER_WAREHOUSE,
                                     payload: {id, branch, model: el.model, count: event.target.value}})
+                                    dispatch({type: CHANGE_TRANSFER_WAREHOUSE_COUNTER,
+                                        payload: {id, branch, model: el.model, count: event.target.value}})
                                     cartridges_types.forEach((elem) => {
                                         if (elem.model === el.model) {
                                             elem.count = event.target.value;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SHOW_MODAL_ADD_CARTRIDGE } from "../../../redux/types";
+import { MODAL_ABOUT, SHOW_MODAL_ADD_CARTRIDGE } from "../../../redux/types";
 import ModalCartridgeForm from "../ModalAddForm/ModalCartridgeForm";
 import "./MainApplications.scss";
 
@@ -9,9 +9,7 @@ export default function SelectBranchRequest() {
 
   console.log(finishReques);
   const [anyState, setAnyState] = useState('')
-  console.log('render');
 
-  const [showCartridge, setShowCartridge] = useState(false);
   const [note, setNote] = useState('');
   const dispatch = useDispatch();
 
@@ -59,7 +57,7 @@ export default function SelectBranchRequest() {
         <div>
           <button
             className="btn btn-info"
-            onClick={() => dispatch({type: 'ModalAbout', payload: !finishRequest.descriptionField.modal, id: finishRequest.descriptionField.id})}
+            onClick={() => dispatch({type: MODAL_ABOUT, payload: !finishRequest.descriptionField.modal, id: finishRequest.descriptionField.id})}
           >
             Подробнее
           </button>
