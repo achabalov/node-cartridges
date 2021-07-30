@@ -29,10 +29,7 @@ export const finishCartridgeReducer = (state = initialState, action) => {
             }
         case MODAL_ABOUT: 
         const newModal = [...state.finishRequestCartridges]
-        newModal.forEach(el=>  {
-            console.log(el.descriptionField.id , action.id );
-            const k = el.descriptionField.id === action.id ? el.descriptionField.modal = action.payload : null
-        })
+        newModal.forEach(el=> el.descriptionField.id === action.id ? el.descriptionField.modal = action.payload : null)
             return {
                 ...state,
                 finishRequestCartridges: [...newModal]
