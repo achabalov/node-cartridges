@@ -42,12 +42,18 @@ export const reducerEquipment = (state = initialState, action) => {
     case "ADD_MODEL_COUNT":
       let newCart = [...state.cartridges];
       
-      if(action.payload.count !== '0') {
-        const index = newCart.findIndex(el => el.model === action.payload.model);
-        if(index === -1) {
+      if (action.payload.count) {
+        const currentCart = newCart.find(el => el.model === action.payload.model);
+
+        if (!currentCart) {
           newCart.push(action.payload);
+        } else {
+          currentCart.count = action.payload.count
         }
-      } else newCart = newCart.filter(el=> el.model !== action.payload.model)
+
+      } else {
+        newCart = newCart.filter(el=> el.model !== action.payload.model)
+      }
       
       return {
       ...state,

@@ -6,11 +6,6 @@ import "./MainApplications.scss";
 
 export default function SelectBranchRequest() {
   const finishReques = useSelector((state) => state.finish.finishRequestCartridges);
-
-  console.log(finishReques);
-  const [anyState, setAnyState] = useState('')
-
-  const [note, setNote] = useState('');
   const dispatch = useDispatch();
 
   return (
@@ -149,7 +144,7 @@ export default function SelectBranchRequest() {
             </div>
           </div>
         ) : null}
-      <ModalCartridgeForm id={finishRequest.descriptionField.id} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
+      <ModalCartridgeForm id={finishRequest.descriptionField.id} />
       </div>
       )
     })}

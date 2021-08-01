@@ -57,7 +57,7 @@ export default function FormDevices() {
     <>
       <h2>Техника в ремонт</h2>
       <form className='form' onSubmit={onChangeHandler}>
-        <SelectBranch add={ADD_BRANCH_CARTRIDGES} filter={DEVICE_FILTER_BRANCH} />
+        <SelectBranch />
         <br />
         <div className="device__form">
           <div className="device__form__label">

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cartridges_types } from '../../../redux/defaultValues';
 import { ACTUAL_RETURN, ADD_TRANSFER_WAREHOUSE, CHANGE_ACTUAL_RETURN_COUNT, CHANGE_TRANSFER_WAREHOUSE_COUNTER } from '../../../redux/types';
 
-export default function SelectModel({id, flag, note, setNote, anyState, setAnyState}) {
+export default function SelectModel({ onChange }) {
 
-    const branch = useSelector(state=> state.equipment.branch);
+    const branch = useSelector(state => state.equipment.branch);
     const dispatch = useDispatch();
 
     return (
@@ -24,57 +24,24 @@ export default function SelectModel({id, flag, note, setNote, anyState, setAnySt
                             </div>
                             <select 
                             className='form-select' 
-                            onChange={event => {
-                                    if (flag === 'transferFromWarehouse') {
-                                    dispatch({type: ADD_TRANSFER_WAREHOUSE,
-                                    payload: {id, branch, model: el.model, count: event.target.value}})
-                                    dispatch({type: CHANGE_TRANSFER_WAREHOUSE_COUNTER,
-                                        payload: {id, branch, model: el.model, count: event.target.value}})
-                                    cartridges_types.forEach((elem) => {
-                                        if (elem.model === el.model) {
-                                            elem.count = event.target.value;
-                                        }
-                                      });
-                                    // dispatch({type: 'countTransferFromWarehouse', payload: {id, branch, model: el.model, count: event.target.value}})
-                                    setAnyState(prev=> prev += ' ')
-                                    } else if(flag === 'actualReturn') {
-                                        console.log('id', id);
-                                        dispatch({type: ACTUAL_RETURN,
-                                        payload: {id, branch, model: el.model, count: event.target.value}})
-                                        dispatch({type: CHANGE_ACTUAL_RETURN_COUNT,
-                                        payload: {id, branch, model: el.model, count: event.target.value}})
-                                    setAnyState(prev=> prev += ' ')
-                                    cartridges_types.forEach((elem) => {
-                                        if (elem.model === el.model) {
-                                            elem.count = event.target.value;
-                                        }
-                                      });
-                                    } else {
-                                        dispatch({type: 'ADD_MODEL_COUNT',
-                                        payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})
-                                        cartridges_types.forEach((elem) => {
-                                            if (elem.model === el.model) {
-                                                elem.count = event.target.value;
-                                            }
-                                          });
-                                    }}}
-                            defaultValue={'0'}>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
+                            onChange={event => onChange(el, branch, event.target.value)}
+                            defaultValue={0}>
+                                <option value={0}>0</option>
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                                <option value={6}>6</option>
+                                <option value={7}>7</option>
+                                <option value={8}>8</option>
+                                <option value={9}>9</option>
+                                <option value={10}>10</option>
+                                <option value={11}>11</option>
+                                <option value={12}>12</option>
+                                <option value={13}>13</option>
+                                <option value={14}>14</option>
+                                <option value={15}>15</option>
                             </select>
                             
                     </div>
@@ -84,7 +51,7 @@ export default function SelectModel({id, flag, note, setNote, anyState, setAnySt
                 })}
                             <div> 
                                 <label>Примечание</label>
-                                <input className='modal__add__input' type="text" value={note} onChange={e=> setNote(e.target.value)} />
+                                <input className='modal__add__input' type="text" />
                             </div>
             </div>
     )

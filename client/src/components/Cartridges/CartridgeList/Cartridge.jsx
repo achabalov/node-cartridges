@@ -9,7 +9,7 @@ import {
 
 import "./Cartridge.scss";
 
-export default function Cartridge({note}) {
+export default function Cartridge() {
   const cartridge = useSelector((state) => state.equipment.cartridges);
   const branch = useSelector((state) => state.equipment.branch);
   const dispatch = useDispatch();
@@ -20,14 +20,12 @@ export default function Cartridge({note}) {
     branch,
     id: Date.now(),
     dateToRequest: dateImport,
-    totalCount,
-    note
+    totalCount
   }
 
   useEffect(()=> {
     const date = new Date();
     const year = date.getFullYear();
-    console.log(date.getMonth()< 10);
     const month = date.getMonth()+1 < 10 ? '0' +(date.getMonth()+1): date.getMonth()+1;
     const day = date.getDate();
     setDateImport(day+':'+month+':'+year)
@@ -48,7 +46,7 @@ export default function Cartridge({note}) {
           </div>
           )
         })}
-        <div>Примечания {note || 'отсутствуют'}</div>
+        <div>Примечания {'' || 'отсутствуют'}</div>
         <div>Итого картриджей в заявке {totalCount}</div>
       </div>
         <div className='preview__apllication__option'>

@@ -1,0 +1,983 @@
+Index: client/src/components/Cartridges/CartridgeList/Cartridge.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/client/src/components/Cartridges/CartridgeList/Cartridge.jsx b/client/src/components/Cartridges/CartridgeList/Cartridge.jsx
+--- a/client/src/components/Cartridges/CartridgeList/Cartridge.jsx	(revision cc2f1ce64c8332762a22dca212c2f110096635d0)
++++ b/client/src/components/Cartridges/CartridgeList/Cartridge.jsx	(revision d07d70cc6061c155a2f5e83020ac9dc45251eb86)
+@@ -9,7 +9,7 @@
+ 
+ import "./Cartridge.scss";
+ 
+-export default function Cartridge({note}) {
++export default function Cartridge() {
+   const cartridge = useSelector((state) => state.equipment.cartridges);
+   const branch = useSelector((state) => state.equipment.branch);
+   const dispatch = useDispatch();
+@@ -20,14 +20,12 @@
+     branch,
+     id: Date.now(),
+     dateToRequest: dateImport,
+-    totalCount,
+-    note
++    totalCount
+   }
+ 
+   useEffect(()=> {
+     const date = new Date();
+     const year = date.getFullYear();
+-    console.log(date.getMonth()< 10);
+     const month = date.getMonth()+1 < 10 ? '0' +(date.getMonth()+1): date.getMonth()+1;
+     const day = date.getDate();
+     setDateImport(day+':'+month+':'+year)
+@@ -48,7 +46,7 @@
+           </div>
+           )
+         })}
+-        <div>Примечания {note || 'отсутствуют'}</div>
++        <div>Примечания {'' || 'отсутствуют'}</div>
+         <div>Итого картриджей в заявке {totalCount}</div>
+       </div>
+         <div className='preview__apllication__option'>
+Index: client/src/components/Cartridges/FormCartridges/FormCartridge.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/client/src/components/Cartridges/FormCartridges/FormCartridge.js b/client/src/components/Cartridges/FormCartridges/FormCartridge.js
+--- a/client/src/components/Cartridges/FormCartridges/FormCartridge.js	(revision cc2f1ce64c8332762a22dca212c2f110096635d0)
++++ b/client/src/components/Cartridges/FormCartridges/FormCartridge.js	(revision d07d70cc6061c155a2f5e83020ac9dc45251eb86)
+@@ -16,8 +16,6 @@
+   const dispatch = useDispatch();
+   const branch = useSelector(state => state.equipment.branch);
+ 
+-  const [note, setNote] = useState('');
+-
+   useEffect(() => {
+     branch && dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: 'addCartridge'} });
+   }, [branch]);
+@@ -50,17 +48,17 @@
+             filter={DEVICE_FILTER_BRANCH}
+           />
+           <br />
+-          {branch ? 
++          {branch &&
+           <button 
+           className='btn btn-success' 
+           onClick={()=> dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: "addCartridge"} })}
+           >
+             Добавить
+-            </button>: ''}
+-          <ModalCartridgeForm note={note} setNote={setNote}/>
++            </button>}
++          <ModalCartridgeForm />
+         </div>
+       </form>
+-      <Cartridge note={note} />
++      <Cartridge />
+     </>
+   );
+ }
+Index: client/src/components/Cartridges/MainApplications/MainApplications.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/client/src/components/Cartridges/MainApplications/MainApplications.jsx b/client/src/components/Cartridges/MainApplications/MainApplications.jsx
+--- a/client/src/components/Cartridges/MainApplications/MainApplications.jsx	(revision cc2f1ce64c8332762a22dca212c2f110096635d0)
++++ b/client/src/components/Cartridges/MainApplications/MainApplications.jsx	(revision d07d70cc6061c155a2f5e83020ac9dc45251eb86)
+@@ -6,11 +6,6 @@
+ 
+ export default function SelectBranchRequest() {
+   const finishReques = useSelector((state) => state.finish.finishRequestCartridges);
+-
+-  console.log(finishReques);
+-  const [anyState, setAnyState] = useState('')
+-
+-  const [note, setNote] = useState('');
+   const dispatch = useDispatch();
+ 
+   return (
+@@ -149,10 +144,10 @@
+             </div>
+           </div>
+         ) : null}
+-      <ModalCartridgeForm id={finishRequest.descriptionField.id} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
++      <ModalCartridgeForm id={finishRequest.descriptionField.id} />
+       </div>
+       )
+     })}
+     </>
+   );
+-}
+\ No newline at end of file
++}
+Index: client/src/components/Cartridges/ModalAddForm/ModalCartridgeForm.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/client/src/components/Cartridges/ModalAddForm/ModalCartridgeForm.jsx b/client/src/components/Cartridges/ModalAddForm/ModalCartridgeForm.jsx
+--- a/client/src/components/Cartridges/ModalAddForm/ModalCartridgeForm.jsx	(revision cc2f1ce64c8332762a22dca212c2f110096635d0)
++++ b/client/src/components/Cartridges/ModalAddForm/ModalCartridgeForm.jsx	(revision d07d70cc6061c155a2f5e83020ac9dc45251eb86)
+@@ -1,21 +1,65 @@
+-import React from "react";
++import React, {useCallback} from "react";
+ import SelectModel from "../formComponent/SelectModal";
+ import "./ModalCartridgeForm.scss";
+ import { useDispatch, useSelector } from "react-redux";
+ import {
+-  SHOW_MODAL_ADD_CARTRIDGE, 
++  ACTUAL_RETURN,
++  ADD_TRANSFER_WAREHOUSE, CHANGE_ACTUAL_RETURN_COUNT, CHANGE_TRANSFER_WAREHOUSE_COUNTER,
++  SHOW_MODAL_ADD_CARTRIDGE,
+ } from "../../../redux/types";
++import {cartridges_types} from "../../../redux/defaultValues";
+ 
+-export default function ModalCartridgeForm({ id, note, setNote, anyState, setAnyState}) {
++export default function ModalCartridgeForm({ id }) {
+   const modal = useSelector((state) => state.equipment.modal);
+   const typeModal = useSelector((state) => state.equipment.typeModal);
+   const cartridges = useSelector((state) => state.equipment.cartridges);
+   const dispatch = useDispatch();
+ 
+-  console.log(id);
++  const fromWarehouseHandler = (el, branch, value) => {
++    dispatch({type: ADD_TRANSFER_WAREHOUSE,
++      payload: {id, branch, model: el.model, count: value}})
++    dispatch({type: CHANGE_TRANSFER_WAREHOUSE_COUNTER,
++      payload: {id, branch, model: el.model, count: value}})
++    cartridges_types.forEach((elem) => {
++      if (elem.model === el.model) {
++        elem.count = value;
++      }
++    })
++  }
+ 
++  const actualReturnHandler = (el, branch, value) => {
++    dispatch({type: ACTUAL_RETURN,
++      payload: {id, branch, model: el.model, count: value}})
++    dispatch({type: CHANGE_ACTUAL_RETURN_COUNT,
++      payload: {id, branch, model: el.model, count: value}})
++    cartridges_types.forEach((elem) => {
++      if (elem.model === el.model) {
++        elem.count = value;
++      }
++    })
++  }
+ 
+-  
++  const addModalHandler = (el, branch, value) => {
++    console.log(el)
++    dispatch({type: 'ADD_MODEL_COUNT',
++      payload: {id: Date.now(), branch, model: el.model, count: value}})
++    cartridges_types.forEach((elem) => {
++      if (elem.model === el.model) {
++        elem.count = value;
++      }
++    })
++  }
++
++  const modalOnChangeHandler = useCallback(() => {
++    switch (typeModal) {
++      case 'transferFromWarehouse':
++        return fromWarehouseHandler
++      case 'actualReturn':
++        return actualReturnHandler
++      default: return addModalHandler
++    }
++  }, [typeModal])
++
+     return (
+       <div
+         className={modal ? "modal__select active" : "modal__select"}
+@@ -32,14 +76,9 @@
+           onClick={(e) => e.stopPropagation()}
+         >
+           <label htmlFor="">Выберите модель</label>
+-          {typeModal === 'transferFromWarehouse' ?
+-          <SelectModel id={id} flag={'transferFromWarehouse'} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
+-          : typeModal === 'actualReturn' ?
+-          <SelectModel id={id} flag={'actualReturn'} note={note} setNote={setNote} anyState={anyState} setAnyState={setAnyState}/>
+-          : <SelectModel note={note} setNote={setNote}/>
++          <SelectModel onChange={modalOnChangeHandler()} />
+         }
+           {
+-
+             cartridges.length !== 0 ? (
+               <button className='btn btn-success' onClick={() => 
+                 dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: false} })
+Index: client/src/components/Cartridges/formComponent/SelectModal.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/client/src/components/Cartridges/formComponent/SelectModal.jsx b/client/src/components/Cartridges/formComponent/SelectModal.jsx
+--- a/client/src/components/Cartridges/formComponent/SelectModal.jsx	(revision cc2f1ce64c8332762a22dca212c2f110096635d0)
++++ b/client/src/components/Cartridges/formComponent/SelectModal.jsx	(revision d07d70cc6061c155a2f5e83020ac9dc45251eb86)
+@@ -3,9 +3,9 @@
+ import { cartridges_types } from '../../../redux/defaultValues';
+ import { ACTUAL_RETURN, ADD_TRANSFER_WAREHOUSE, CHANGE_ACTUAL_RETURN_COUNT, CHANGE_TRANSFER_WAREHOUSE_COUNTER } from '../../../redux/types';
+ 
+-export default function SelectModel({id, flag, note, setNote, anyState, setAnyState}) {
++export default function SelectModel({ onChange }) {
+ 
+-    const branch = useSelector(state=> state.equipment.branch);
++    const branch = useSelector(state => state.equipment.branch);
+     const dispatch = useDispatch();
+ 
+     return (
+@@ -24,57 +24,24 @@
+                             </div>
+                             <select 
+                             className='form-select' 
+-                            onChange={event => {
+-                                    if (flag === 'transferFromWarehouse') {
+-                                    dispatch({type: ADD_TRANSFER_WAREHOUSE,
+-                                    payload: {id, branch, model: el.model, count: event.target.value}})
+-                                    dispatch({type: CHANGE_TRANSFER_WAREHOUSE_COUNTER,
+-                                        payload: {id, branch, model: el.model, count: event.target.value}})
+-                                    cartridges_types.forEach((elem) => {
+-                                        if (elem.model === el.model) {
+-                                            elem.count = event.target.value;
+-                                        }
+-                                      });
+-                                    // dispatch({type: 'countTransferFromWarehouse', payload: {id, branch, model: el.model, count: event.target.value}})
+-                                    setAnyState(prev=> prev += ' ')
+-                                    } else if(flag === 'actualReturn') {
+-                                        console.log('id', id);
+-                                        dispatch({type: ACTUAL_RETURN,
+-                                        payload: {id, branch, model: el.model, count: event.target.value}})
+-                                        dispatch({type: CHANGE_ACTUAL_RETURN_COUNT,
+-                                        payload: {id, branch, model: el.model, count: event.target.value}})
+-                                    setAnyState(prev=> prev += ' ')
+-                                    cartridges_types.forEach((elem) => {
+-                                        if (elem.model === el.model) {
+-                                            elem.count = event.target.value;
+-                                        }
+-                                      });
+-                                    } else {
+-                                        dispatch({type: 'ADD_MODEL_COUNT',
+-                                        payload: {id: Date.now(), branch, model: el.model, count: event.target.value}})
+-                                        cartridges_types.forEach((elem) => {
+-                                            if (elem.model === el.model) {
+-                                                elem.count = event.target.value;
+-                                            }
+-                                          });
+-                                    }}}
+-                            defaultValue={'0'}>
+-                                <option value="0">0</option>
+-                                <option value="1">1</option>
+-                                <option value="2">2</option>
+-                                <option value="3">3</option>
+-                                <option value="4">4</option>
+-                                <option value="5">5</option>
+-                                <option value="6">6</option>
+-                                <option value="7">7</option>
+-                                <option value="8">8</option>
+-                                <option value="9">9</option>
+-                                <option value="10">10</option>
+-                                <option value="11">11</option>
+-                                <option value="12">12</option>
+-                                <option value="13">13</option>
+-                                <option value="14">14</option>
+-                                <option value="15">15</option>
++                            onChange={event => onChange(el, branch, event.target.value)}
++                            defaultValue={0}>
++                                <option value={0}>0</option>
++                                <option value={1}>1</option>
++                                <option value={2}>2</option>
++                                <option value={3}>3</option>
++                                <option value={4}>4</option>
++                                <option value={5}>5</option>
++                                <option value={6}>6</option>
++                                <option value={7}>7</option>
++                                <option value={8}>8</option>
++                                <option value={9}>9</option>
++                                <option value={10}>10</option>
++                                <option value={11}>11</option>
++                                <option value={12}>12</option>
++                                <option value={13}>13</option>
++                                <option value={14}>14</option>
++                                <option value={15}>15</option>
+                             </select>
+                             
+                     </div>
+@@ -84,8 +51,8 @@
+                 })}
+                             <div> 
+                                 <label>Примечание</label>
+-                                <input className='modal__add__input' type="text" value={note} onChange={e=> setNote(e.target.value)} />
++                                <input className='modal__add__input' type="text" value="" />
+                             </div>
+             </div>
+     )
+-}
+\ No newline at end of file
++}
+Index: client/src/redux/finishRequest.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/client/src/redux/finishRequest.js b/client/src/redux/finishRequest.js
+--- a/client/src/redux/finishRequest.js	(revision cc2f1ce64c8332762a22dca212c2f110096635d0)
++++ b/client/src/redux/finishRequest.js	(revision d07d70cc6061c155a2f5e83020ac9dc45251eb86)
+@@ -1,105 +1,117 @@
+-import { ACTUAL_RETURN, ADD_TRANSFER_WAREHOUSE, CHANGE_ACTUAL_RETURN_COUNT, CHANGE_TRANSFER_WAREHOUSE_COUNTER, FINISH_ADDED, MODAL_ABOUT } from './types';
++import {
++  ACTUAL_RETURN,
++  ADD_TRANSFER_WAREHOUSE,
++  CHANGE_ACTUAL_RETURN_COUNT,
++  CHANGE_TRANSFER_WAREHOUSE_COUNTER,
++  FINISH_ADDED,
++  MODAL_ABOUT
++} from './types';
+ 
+ const initialState = {
+-    finishRequestCartridges: [],
+-    }
++  finishRequestCartridges: [],
++}
+ 
+ export const finishCartridgeReducer = (state = initialState, action) => {
+-    switch(action.type) {
++  switch (action.type) {
+ 
+-        case FINISH_ADDED:
+-            return {
+-                ...state,
+-                finishRequestCartridges: [...state.finishRequestCartridges, {
+-                    descriptionField: {
+-                        ...state.descriptionField,
+-                        id: action.description.id,
+-                        modal: false,
+-                        branch: action.description.branch,
+-                        dateToRequest: action.description.dateToRequest,
+-                        totalCount: action.description.totalCount,
+-                        note: action.description.note
+-                    },
+-                    cartridges: [...action.payload],
+-                    transferFromWarehouse: [],
+-                    actualReturn: [],
+-                    countTransferFromWarehouse: 0,
+-                    countActualReturn: 0
+-                }]
+-            }
+-        case MODAL_ABOUT: 
+-        const newModal = [...state.finishRequestCartridges]
+-        newModal.forEach(el=> el.descriptionField.id === action.id ? el.descriptionField.modal = action.payload : null)
+-            return {
+-                ...state,
+-                finishRequestCartridges: [...newModal]
+-            }
+-        case ADD_TRANSFER_WAREHOUSE:
+-            const addNewTransfer = [...state.finishRequestCartridges];
+-            if(action.payload.count !== '0') {
+-                addNewTransfer.forEach(el=> {
+-                    if(el.descriptionField.id === action.payload.id && action.payload.count !== '0') {
+-                        const index = el.transferFromWarehouse.findIndex(elem => elem.model === action.payload.model)
+-                            index !== -1 ? el.transferFromWarehouse[index].count = Number(action.payload.count) : el.transferFromWarehouse.push(action.payload)
+-                    } })
+-                } else {
+-                    const index  = addNewTransfer.findIndex(el=> el.descriptionField.id === action.payload.id)
+-                    if(index !== '-1') {;
+-                        addNewTransfer[index].transferFromWarehouse = addNewTransfer[index].transferFromWarehouse.filter(el => el.model !== action.payload.model)
+-                    }
+-                }
+-            return {
+-                ...state,
+-                finishCartridgeReducer: [ ...addNewTransfer ]
+-            };
+-        case CHANGE_TRANSFER_WAREHOUSE_COUNTER:
+-            const newTransferCount = [...state.finishRequestCartridges];
++    case FINISH_ADDED:
++      return {
++        ...state,
++        finishRequestCartridges: [...state.finishRequestCartridges, {
++          descriptionField: {
++            ...state.descriptionField,
++            id: action.description.id,
++            modal: false,
++            branch: action.description.branch,
++            dateToRequest: action.description.dateToRequest,
++            totalCount: action.description.totalCount,
++            note: action.description.note
++          },
++          cartridges: [...action.payload],
++          transferFromWarehouse: [],
++          actualReturn: [],
++          countTransferFromWarehouse: 0,
++          countActualReturn: 0
++        }]
++      }
++    case MODAL_ABOUT:
++      const newModal = [...state.finishRequestCartridges]
++      newModal.forEach(el => el.descriptionField.id === action.id ? el.descriptionField.modal = action.payload : null)
++      return {
++        ...state,
++        finishRequestCartridges: [...newModal]
++      }
++    case ADD_TRANSFER_WAREHOUSE:
++      const addNewTransfer = [...state.finishRequestCartridges];
++      const foundedTransfer = addNewTransfer.find(el => el.descriptionField.id === action.payload.id)
++      console.warn(foundedTransfer)
++      if (foundedTransfer) {
++        if (action.payload.count) {
++          const duplicateFromWarehouse = foundedTransfer.transferFromWarehouse.find(warehouseItem => warehouseItem.model === action.payload.model)
++            if (duplicateFromWarehouse) {
++              duplicateFromWarehouse.count = action.payload.count
++            } else {
++              foundedTransfer.transferFromWarehouse = [...foundedTransfer.transferFromWarehouse, action.payload]
++            }
++        } else {
++          addNewTransfer.filter(newTransfer => newTransfer.model === foundedTransfer.model)
++        }
++      }
++      return {
++        ...state,
++        finishRequestCartridges: [...addNewTransfer]
++      };
++    case CHANGE_TRANSFER_WAREHOUSE_COUNTER:
++      const newTransferCount = [...state.finishRequestCartridges];
+ 
+-            newTransferCount.forEach(el => {
+-                if(el.descriptionField.id === action.payload.id) {
+-                    const count = el.transferFromWarehouse.reduce((acc, val)=> acc+ +val.count, 0);
+-                    el.countTransferFromWarehouse = Number(count);
+-                }
+-            })
++      newTransferCount.forEach(el => {
++        if (el.descriptionField.id === action.payload.id) {
++          const count = el.transferFromWarehouse.reduce((acc, val) => acc + val.count, 0);
++          el.countTransferFromWarehouse = Number(count);
++        }
++      })
+ 
+-            return {
+-                ...state,
+-                finishRequestCartridges: [...newTransferCount]
+-            }
++      return {
++        ...state,
++        finishRequestCartridges: [...newTransferCount]
++      }
+ 
+-        case ACTUAL_RETURN:
+-            let addNewActualReturn = [...state.finishRequestCartridges];
+-            if(action.payload.count !== '0') {
+-            addNewActualReturn.forEach(el=> {
+-                if(el.descriptionField.id === action.payload.id && action.payload.count !== '0') {
+-                    const index = el.actualReturn.findIndex(elem => elem.model === action.payload.model)
+-                        index !== -1 ? el.actualReturn[index].count = Number(action.payload.count) : el.actualReturn.push(action.payload)
+-                } })
+-            } else {
+-                const index  = addNewActualReturn.findIndex(el=> el.descriptionField.id === action.payload.id)
+-                if(index !== '-1') {;
+-                    addNewActualReturn[index].actualReturn = addNewActualReturn[index].actualReturn.filter(el => el.model !== action.payload.model)
+-                }
+-            }
+-            return {
+-                ...state,
+-                finishRequestCartridges: [...addNewActualReturn]
+-            };
+-        case CHANGE_ACTUAL_RETURN_COUNT:
+-            const newActualCount = [...state.finishRequestCartridges];
++    case ACTUAL_RETURN:
++      let addNewActualReturn = [...state.finishRequestCartridges];
++      if (action.payload.count !== '0') {
++        addNewActualReturn.forEach(el => {
++          if (el.descriptionField.id === action.payload.id && action.payload.count !== '0') {
++            const index = el.actualReturn.findIndex(elem => elem.model === action.payload.model)
++            index !== -1 ? el.actualReturn[index].count = Number(action.payload.count) : el.actualReturn.push(action.payload)
++          }
++        })
++      } else {
++        const index = addNewActualReturn.findIndex(el => el.descriptionField.id === action.payload.id)
++        if (index !== '-1') {
++          ;
++          addNewActualReturn[index].actualReturn = addNewActualReturn[index].actualReturn.filter(el => el.model !== action.payload.model)
++        }
++      }
++      return {
++        ...state,
++        finishRequestCartridges: [...addNewActualReturn]
++      };
++    case CHANGE_ACTUAL_RETURN_COUNT:
++      const newActualCount = [...state.finishRequestCartridges];
+ 
+-            newActualCount.forEach(el => {
+-                if(el.descriptionField.id === action.payload.id) {
+-                    const count = el.actualReturn.reduce((acc, val)=> acc+ +val.count, 0);
+-                    el.countActualReturn = Number(count);
+-                }
+-            })
++      newActualCount.forEach(el => {
++        if (el.descriptionField.id === action.payload.id) {
++          const count = el.actualReturn.reduce((acc, val) => acc + (+val.count), 0);
++          el.countActualReturn = Number(count);
++        }
++      })
+ 
+-            return {
+-                ...state,
+-                finishRequestCartridges: [...newActualCount]
+-            }
++      return {
++        ...state,
++        finishRequestCartridges: [...newActualCount]
++      }
+ 
+-        default : return state
+-        }
++    default :
++      return state
++  }
+ }
+Index: client/src/redux/reducerCartridges.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/client/src/redux/reducerCartridges.js b/client/src/redux/reducerCartridges.js
+--- a/client/src/redux/reducerCartridges.js	(revision cc2f1ce64c8332762a22dca212c2f110096635d0)
++++ b/client/src/redux/reducerCartridges.js	(revision d07d70cc6061c155a2f5e83020ac9dc45251eb86)
+@@ -42,12 +42,18 @@
+     case "ADD_MODEL_COUNT":
+       let newCart = [...state.cartridges];
+       
+-      if(action.payload.count !== '0') {
+-        const index = newCart.findIndex(el => el.model === action.payload.model);
+-        if(index === -1) {
++      if (action.payload.count) {
++        const currentCart = newCart.find(el => el.model === action.payload.model);
++
++        if (!currentCart) {
+           newCart.push(action.payload);
++        } else {
++          currentCart.count = action.payload.count
+         }
+-      } else newCart = newCart.filter(el=> el.model !== action.payload.model)
++
++      } else {
++        newCart = newCart.filter(el=> el.model !== action.payload.model)
++      }
+       
+       return {
+       ...state,
+diff --git a/folderOnSave/savedfile.docx b/folderOnSave/savedfile.docx
+index fa3ffa552baca3dbd1e3acc43f0e734de7ef6876..95ec6f629738957915182719c812cc5467ff6312
+GIT binary patch
+literal 220129
+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
+

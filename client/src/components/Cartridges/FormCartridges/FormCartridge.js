@@ -16,8 +16,6 @@ export function FormCartridge() {
   const dispatch = useDispatch();
   const branch = useSelector(state => state.equipment.branch);
 
-  const [note, setNote] = useState('');
-
   useEffect(() => {
     branch && dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: 'addCartridge'} });
   }, [branch]);
@@ -45,22 +43,19 @@ export function FormCartridge() {
       <h2>Картриджи в заправку</h2>
       <form className={"form__container"} onSubmit={submitHandler}>
         <div className="form__container__contols">
-          <SelectBranch
-            add={ADD_BRANCH_CARTRIDGES}
-            filter={DEVICE_FILTER_BRANCH}
-          />
+          <SelectBranch />
           <br />
-          {branch ? 
+          {branch &&
           <button 
           className='btn btn-success' 
           onClick={()=> dispatch({ type: SHOW_MODAL_ADD_CARTRIDGE, payload: {modal: true, typeModal: "addCartridge"} })}
           >
             Добавить
-            </button>: ''}
-          <ModalCartridgeForm note={note} setNote={setNote}/>
+            </button>}
+          <ModalCartridgeForm />
         </div>
       </form>
-      <Cartridge note={note} />
+      <Cartridge />
     </>
   );
 }

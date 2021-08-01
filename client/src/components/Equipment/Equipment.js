@@ -8,7 +8,7 @@ import { ADD_BRANCH_CARTRIDGES, DEVICE_FILTER_BRANCH } from "../../redux/types";
 export default function Equipment() {
   return (
     <div className="equipment">
-      <SelectBranch add={ADD_BRANCH_CARTRIDGES} filter={DEVICE_FILTER_BRANCH} />
+      <SelectBranch />
       <hr style={{ width: "70%" }} />
       <div className="equipment__cartridges">
       <h3>Картриджи в заправку</h3>
